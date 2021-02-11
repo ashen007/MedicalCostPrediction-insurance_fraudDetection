@@ -11,7 +11,6 @@ class get:
                                                  columns=['missing count'])
         missing_values_by_rows = pd.DataFrame(data=self.__dataframe.isna().sum(axis=0),
                                               columns=['missing count'])
-        missing_values_by_rows = missing_values_by_rows[missing_values_by_feature['missing count'] > 0]
 
         return missing_values_by_feature, missing_values_by_rows
 
