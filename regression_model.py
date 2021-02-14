@@ -47,3 +47,10 @@ def fit(x, y, learning_rate, epochs):
     theta, cost = gradient_decent(x, y, learning_rate, theta, epochs)
 
     return theta, cost
+
+
+def ridge_fit(x, y, learning_rate, alpha, epochs):
+    theta = np.zeros(x.shape[1])
+    theta, cost = ridge_regression(x, y, learning_rate, theta, alpha, epochs)
+
+    return theta, cost
