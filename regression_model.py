@@ -29,17 +29,17 @@ def gradient_decent(x, y, learning_rate, theta, epochs):
 
 
 def ridge_regression(x, y, learning_rate, theta, alpha, epochs):
-    cost_history = []
+    # cost_history = []
 
     for i in range(epochs):
         hypothesis = np.dot(x, theta)
         loss = hypothesis - y
-        gradient = 2 * (np.dot(x.T, loss) + alpha * hypothesis)
+        gradient = 2 * (np.dot(x.T, loss) + alpha * theta)/len(y)
         theta = theta - learning_rate * gradient
-        cost = ridge_cost_function(x, y, theta, alpha)
-        cost_history.append(cost)
+        # cost = ridge_cost_function(x, y, theta, alpha)
+        # cost_history.append(cost)
 
-    return theta, cost_history
+    return theta
 
 
 def fit(x, y, learning_rate, epochs):
@@ -51,6 +51,6 @@ def fit(x, y, learning_rate, epochs):
 
 def ridge_fit(x, y, learning_rate, alpha, epochs):
     theta = np.zeros(x.shape[1])
-    theta, cost = ridge_regression(x, y, learning_rate, theta, alpha, epochs)
+    theta= ridge_regression(x, y, learning_rate, theta, alpha, epochs)
 
-    return theta, cost
+    return theta
