@@ -46,7 +46,7 @@ def lasso_regression(x, y, learning_rate, theta, alpha, epochs):
     for i in range(epochs):
         hypothesis = np.dot(x, theta)
         loss = hypothesis - y
-        gradient = (np.dot(x.T, loss) + np.abs(theta)/2*theta) / len(y)
+        gradient = (2 * np.dot(x.T, loss) + alpha * np.abs(theta) / theta) / len(y)
         theta = theta - learning_rate * gradient
 
     return theta
