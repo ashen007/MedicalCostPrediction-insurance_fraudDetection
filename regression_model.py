@@ -34,10 +34,20 @@ def ridge_regression(x, y, learning_rate, theta, alpha, epochs):
     for i in range(epochs):
         hypothesis = np.dot(x, theta)
         loss = hypothesis - y
-        gradient = 2 * (np.dot(x.T, loss) + alpha * theta)/len(y)
+        gradient = 2 * (np.dot(x.T, loss) + alpha * theta) / len(y)
         theta = theta - learning_rate * gradient
         # cost = ridge_cost_function(x, y, theta, alpha)
         # cost_history.append(cost)
+
+    return theta
+
+
+def lasso_regression(x, y, learning_rate, theta, alpha, epochs):
+    for i in range(epochs):
+        hypothesis = np.dot(x, theta)
+        loss = hypothesis - y
+        gradient = (np.dot(x.T, loss) + np.abs(theta)/2*theta) / len(y)
+        theta = theta - learning_rate * gradient
 
     return theta
 
@@ -51,6 +61,13 @@ def fit(x, y, learning_rate, epochs):
 
 def ridge_fit(x, y, learning_rate, alpha, epochs):
     theta = np.zeros(x.shape[1])
-    theta= ridge_regression(x, y, learning_rate, theta, alpha, epochs)
+    theta = ridge_regression(x, y, learning_rate, theta, alpha, epochs)
+
+    return theta
+
+
+def lasso_fit(x, y, learning_rate, alpha, epochs):
+    theta = np.zeros(x.shape[1])
+    theta = lasso_regression(x, y, learning_rate, theta, alpha, epochs)
 
     return theta
