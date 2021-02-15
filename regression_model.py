@@ -67,7 +67,7 @@ def ridge_fit(x, y, learning_rate, alpha, epochs):
 
 
 def lasso_fit(x, y, learning_rate, alpha, epochs):
-    theta = np.zeros(x.shape[1])
+    theta = np.ones(x.shape[1])
     theta = lasso_regression(x, y, learning_rate, theta, alpha, epochs)
 
     return theta
