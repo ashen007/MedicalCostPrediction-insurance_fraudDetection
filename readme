@@ -1,0 +1,11 @@
+# medical cost predictions
+
+In this notebook try to build a better predicting model to estimate medical cost
+of person. in here use linear regression models using ordinary least square, gradient
+decent, ridge regularization (L2), lasso regularization (L1), and polynomial methods.
+
+# dataset
+
+dataset use in here is medical cost prediction dataset from **kaggle**. you can find it from <a href="https://www.kaggle.com/mirichoi0218/insurance">here</a>.
+
+![plot](./demo/dataset_overview.jpg)
