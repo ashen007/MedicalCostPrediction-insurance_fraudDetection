@@ -6,7 +6,7 @@ decent, ridge regularization (L2), lasso regularization (L1), and polynomial met
 
 # Dataset
 dataset use in here is medical cost prediction dataset from **kaggle**. you can find it from <a href="https://www.kaggle.com/mirichoi0218/insurance">here</a>.
-![plot](./demo/dataset_overview.jpg)
+
 
 # models
 
@@ -16,7 +16,7 @@ dataset use in here is medical cost prediction dataset from **kaggle**. you can 
 3. ***Ridge Regression with gradient decent*** - r2_score: 80.9393006522291 MSE: 462.5036477015515
 4. ***Lasso Regression with gradient decent*** - r2_score: 80.93931120043436 MSE: 462.50339175168745
 
-![plot](./demo/nd_compare.jpg)
+
 
 # models performance when polynomial distribution
 1. ***OLS*** - r2_score: 86.6583090316484
@@ -24,4 +24,4 @@ dataset use in here is medical cost prediction dataset from **kaggle**. you can 
 3. ***Ridge Regression with gradient decent*** - r2_score: 81.28809640222535
 4. ***Lasso Regression with gradient decent*** - r2_score: 81.28792707426157
 
-![plot](./demo/poly_compare.jpg)
+
