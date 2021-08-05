@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import missingno as mn
 
-from matplotlib import pyplot
+from matplotlib import pyplot as plt
 
 
 class SanityCheck:
@@ -83,3 +83,34 @@ class SanityCheck:
         return pd.DataFrame(data=mag.values(),
                             index=mag.keys(),
                             columns=['min', 'max', 'mean', 'median', 'variance', 'std', '5%', '25%', '75%', '95%'])
+
+    def examine_dist(self, feature, hue=None,
+                     bins='auto', stat='frequency', kde=False, discrete=False,
+                     title=None, path=None):
+        """
+        examine the shape of the distribution
+        :param feature:
+        :param hue:
+        :param bins:
+        :param stat:
+        :param kde:
+        :param discrete:
+        :param title:
+        :param path:
+        :return:
+        """
+        plt.figure(figsize=[12, 6], dpi=300)
+        sns.histplot(x=feature,
+                     hue=hue,
+                     data=self.data,
+                     bins=bins,
+                     stat=stat,
+                     kde=kde,
+                     discrete=discrete
+                     )
+        plt.title(title)
+
+        if path is not None:
+            plt.savefig(path)
+
+        plt.show()
