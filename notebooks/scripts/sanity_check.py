@@ -86,7 +86,7 @@ class SanityCheck:
         card = {}
 
         for col in cat.columns:
-            card[col] = [self.data[col].value_counts(), list(self.data[col].unique())]
+            card[col] = [self.data[col].value_counts(), len(list(self.data[col].unique()))]
 
         return card
 
