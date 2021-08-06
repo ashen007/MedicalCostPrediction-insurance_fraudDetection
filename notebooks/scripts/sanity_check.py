@@ -35,7 +35,7 @@ class SanityCheck:
         :return: pandas series
         """
         n = self.data.shape
-        col_missing = (self.data.isnull().sum() / n[0]).to_dict()
+        col_missing = (self.data.isnull().sum() * 100 / n[0]).to_dict()
         total_missing = np.sum(self.data.isnull().sum())
 
         print('total missing count:{} ({}%)'.format(total_missing, total_missing * 100 / np.product(n)))
@@ -43,7 +43,16 @@ class SanityCheck:
         print('total columns: {}'.format(n[1]))
         print('-' * 75)
 
-        return pd.Series(col_missing, name=['feature', 'missing'])
+        return pd.Series(col_missing)
+
+    def render_missing_matrix(self, features):
+        """
+        missing value matrix
+        :return:
+        """
+        plt.figure(figsize=[12, 6], dpi=300)
+        mn.matrix(self.data[features])
+        plt.show()
 
     def cardinality(self):
         """
