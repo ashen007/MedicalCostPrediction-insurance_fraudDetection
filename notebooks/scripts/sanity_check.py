@@ -45,6 +45,28 @@ class SanityCheck:
 
         return pd.Series(col_missing)
 
+    def render_case_missing_matrix(self, axis=0):
+        """
+        examine the pattern of missing
+        :param axis:
+        :return:
+        """
+        if axis == 0:
+            missing_case = (self.data.isnull().sum(axis=0) * 100 / self.data.shape[0]).sort_values()
+            plt.figure(figsize=[12, 6], dpi=300)
+            sns.barplot(x=missing_case.index, y=missing_case.values, palette='Greys')
+            plt.xticks(rotation=90)
+            plt.show()
+
+        elif axis == 1:
+            missing_feat = self.data.isnull().sum(axis=1)
+            plt.figure(figsize=[12, 6], dpi=300)
+            sns.histplot(x=missing_feat, discrete=True, color='#000')
+            plt.show()
+
+        else:
+            raise ValueError
+
     def render_missing_matrix(self, features):
         """
         missing value matrix
