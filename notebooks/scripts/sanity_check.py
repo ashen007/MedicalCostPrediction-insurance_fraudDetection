@@ -112,6 +112,18 @@ class SanityCheck:
 
         return card
 
+    def rare_categories(self, feature=None, thresh=0.05):
+        """
+        pinpoint rare categories
+        :param feature:
+        :param thresh:
+        :return:
+        """
+        card = self.data[feature].value_counts()
+        percent = card / np.sum(card)
+
+        return percent[percent.values <= thresh].index
+
     def magnitude(self):
         """
         compare feature magnitude
