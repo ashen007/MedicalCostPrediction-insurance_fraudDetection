@@ -97,16 +97,17 @@ class SanityCheck:
         mn.matrix(self.data[features])
         plt.show()
 
-    def cardinality(self):
+    def cardinality(self, exclude=None):
         """
         determine cardinalities in categorical features
         :return:
         """
         n = self.data.shape[0]
-        cat = self.data.select_dtypes(include=np.object)
+        cat = self.data.select_dtypes(include=np.object).columns
+        include = [ele for ele in cat if ele not in exclude]
         card = {}
 
-        for col in cat.columns:
+        for col in include:
             card[col] = [self.data[col].value_counts(), len(list(self.data[col].unique()))]
 
         return card
