@@ -29,6 +29,27 @@ class SanityCheck:
                 'continues': continues,
                 'categorical': cat_fet}
 
+    def date_columns(self, columns, format):
+        """
+        change data type into datetime
+        :param columns:
+        :param format:
+        :return:
+        """
+        for col in columns:
+            self.data[col] = pd.to_datetime(self.data[col], format=format)
+
+    def change_dtypes(self, features, inplace=True):
+        """
+        :param features: dict
+        :param inplace: make changes on original dataframe
+        :return: dataframe
+        """
+        if inplace:
+            self.data = self.data.astype(features)
+        else:
+            return self.data.astype(features, copy=True)
+
     def missing_data(self):
         """
         quantify missing data
@@ -145,3 +166,6 @@ class SanityCheck:
             plt.savefig(path)
 
         plt.show()
+
+    def __str__(self):
+        return 'check measurement level, cardinality and missing values.'
