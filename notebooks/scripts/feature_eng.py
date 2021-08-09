@@ -1,5 +1,3 @@
-import numpy as np
-import pandas as pd
 from feature_engine.imputation import CategoricalImputer, MeanMedianImputer, ArbitraryNumberImputer
 from feature_engine.encoding import CountFrequencyEncoder, OrdinalEncoder, RareLabelEncoder
 
