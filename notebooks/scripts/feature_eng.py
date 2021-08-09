@@ -46,9 +46,36 @@ class FeatureEngineering:
         elif method == 'arbitrary':
             imputes = ArbitraryNumberImputer(arbitrary_number=999999,
                                              variables=features)
-            imputes.fit(self.data)
 
             return imputes.fit_transform(self.data), imputes.imputer_dict_
 
-    def encoding(self, method=None):
+    def encoding(self, features=None, method=None):
+        """
+        encode categorical features
+        :param method:
+        :return:
+        """
+        if method == 'count':
+            imputes = CountFrequencyEncoder(encoding_method='count',
+                                            variables=features)
 
+            return imputes.fit_transform(self.data), imputes.encoder_dict_
+
+        elif method == 'frequency':
+            imputes = CountFrequencyEncoder(encoding_method='frequency',
+                                            variables=features)
+
+            return imputes.fit_transform(self.data), imputes.encoder_dict_
+
+        elif method == 'ordinal':
+            imputes = OrdinalEncoder(encoding_method='ordered',
+                                     variables=features)
+
+            return imputes.fit_transform(self.data), imputes.encoder_dict_
+
+        elif method == 'ordinal':
+            imputes = RareLabelEncoder(tol=0.001,
+                                       variables=features,
+                                       ignore_format=True)
+
+            return imputes.fit_transform(self.data), imputes.encoder_dict_
