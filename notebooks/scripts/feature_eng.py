@@ -26,26 +26,30 @@ class FeatureEngineering:
             imputes = CategoricalImputer(imputation_method='missing',
                                          fill_value='neither',
                                          variables=features)
+            self.data = imputes.fit_transform(self.data)
 
-            return imputes.fit_transform(self.data), imputes.imputer_dict_
+            return imputes.imputer_dict_
 
         elif method == 'frequency':
             imputes = CategoricalImputer(imputation_method='frequency',
                                          variables=features)
+            self.data = imputes.fit_transform(self.data)
 
-            return imputes.fit_transform(self.data), imputes.imputer_dict_
+            return imputes.imputer_dict_
 
         elif method == 'median':
             imputes = MeanMedianImputer(imputation_method='median',
                                         variables=features)
+            self.data = imputes.fit_transform(self.data)
 
-            return imputes.fit_transform(self.data), imputes.imputer_dict_
+            return imputes.imputer_dict_
 
         elif method == 'arbitrary':
             imputes = ArbitraryNumberImputer(arbitrary_number=999999,
                                              variables=features)
+            self.data = imputes.fit_transform(self.data)
 
-            return imputes.fit_transform(self.data), imputes.imputer_dict_
+            return imputes.imputer_dict_
 
     def encoding(self, features=None, method=None):
         """
@@ -56,24 +60,28 @@ class FeatureEngineering:
         if method == 'count':
             imputes = CountFrequencyEncoder(encoding_method='count',
                                             variables=features)
+            self.data = imputes.fit_transform(self.data)
 
-            return imputes.fit_transform(self.data), imputes.encoder_dict_
+            return imputes.encoder_dict_
 
         elif method == 'frequency':
             imputes = CountFrequencyEncoder(encoding_method='frequency',
                                             variables=features)
+            self.data = imputes.fit_transform(self.data)
 
-            return imputes.fit_transform(self.data), imputes.encoder_dict_
+            return imputes.encoder_dict_
 
         elif method == 'ordinal':
             imputes = OrdinalEncoder(encoding_method='ordered',
                                      variables=features)
+            self.data = imputes.fit_transform(self.data)
 
-            return imputes.fit_transform(self.data), imputes.encoder_dict_
+            return imputes.encoder_dict_
 
         elif method == 'ordinal':
             imputes = RareLabelEncoder(tol=0.001,
                                        variables=features,
                                        ignore_format=True)
+            self.data = imputes.fit_transform(self.data)
 
-            return imputes.fit_transform(self.data), imputes.encoder_dict_
+            return imputes.encoder_dict_
