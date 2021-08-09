@@ -31,7 +31,7 @@ class FeatureEngineering:
             return imputes.imputer_dict_
 
         elif method == 'frequency':
-            imputes = CategoricalImputer(imputation_method='frequency',
+            imputes = CategoricalImputer(imputation_method='frequent',
                                          variables=features)
             self.data = imputes.fit_transform(self.data)
 
