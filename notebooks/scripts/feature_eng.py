@@ -78,8 +78,8 @@ class FeatureEngineering:
 
             return imputes.encoder_dict_
 
-        elif method == 'ordinal':
-            imputes = RareLabelEncoder(tol=0.001,
+        elif method == 'rare':
+            imputes = RareLabelEncoder(tol=0.0005,
                                        variables=features,
                                        ignore_format=True)
             self.data = imputes.fit_transform(self.data)
