@@ -59,3 +59,11 @@ class CentralTendency:
                 raise ValueError('proportion must be int or a float.')
         else:
             raise ValueError('invalid method.')
+
+    def median(self, feature):
+        """
+        calculate median
+        :param feature:
+        :return:
+        """
+        return np.median(self.data[feature])
