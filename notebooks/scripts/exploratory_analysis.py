@@ -97,3 +97,11 @@ class Variability:
         :return:
         """
         return np.var(self.data[feature])
+
+    def standard_variance(self, feature):
+        """
+        calculate standard deviation
+        :param feature:
+        :return:
+        """
+        return np.std(self.data[feature])
