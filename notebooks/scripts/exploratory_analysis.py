@@ -14,14 +14,14 @@ class CentralTendency:
     def __init__(self, dataframe):
         """
         initialize dataframe
-        :param dataframe:
+        :param dataframe dataframe: dataframe want to examine
         """
         self.data = dataframe
 
     def typical_value(self, feature):
         """
         mean
-        :param feature:
+        :param str feature: column name
         :return:
         """
         return np.mean(self.data[feature])
@@ -29,9 +29,9 @@ class CentralTendency:
     def trimmed_mean(self, feature, method='both', proportion=0.1):
         """
         calculate trimmed average
-        :param feature:
-        :param method:
-        :param proportion:
+        :param str feature:
+        :param str method:
+        :param int,float proportion:
         :return:
         """
         if method in ['start', 'end', 'both']:
