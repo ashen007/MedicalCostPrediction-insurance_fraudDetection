@@ -67,3 +67,16 @@ class CentralTendency:
         :return:
         """
         return np.median(self.data[feature])
+
+    def winsorized_mean(self, feature, portion=0.1):
+        """
+        arithmetic mean in the which extreme values are replaced by values closer to the mean
+        :param portion:
+        :param feature:
+        :return:
+        """
+        temp = self.data.copy()[feature].sort_values()
+        temp.iloc[:int(self.data.shape[0] * portion)] = np.median(self.data[feature])
+        temp.iloc[-int(self.data.shape[0] * portion):] = np.median(self.data[feature])
+
+        return np.mean(temp)
