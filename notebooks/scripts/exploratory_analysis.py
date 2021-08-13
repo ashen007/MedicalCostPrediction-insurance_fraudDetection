@@ -128,3 +128,11 @@ class Variability:
                 raise ValueError('when use quartile proportion must be float between 0 and 100.')
         else:
             raise ValueError('wrong method.')
+
+    def mean_absolute_deviation(self, feature):
+        """
+        calculate mean absolute deviation
+        :param feature:
+        :return:
+        """
+        return np.sum(np.abs(self.data[feature] - np.mean(self.data[feature]))) / self.data.shape[0]
