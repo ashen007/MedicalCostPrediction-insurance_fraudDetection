@@ -80,3 +80,20 @@ class CentralTendency:
         temp.iloc[-int(self.data.shape[0] * portion):] = np.median(self.data[feature])
 
         return np.mean(temp)
+
+
+class Variability:
+    """
+    dispersion of the data
+    """
+
+    def __init__(self, dataframe):
+        self.data = dataframe
+
+    def variance(self, feature):
+        """
+        calculate the variance
+        :param feature:
+        :return:
+        """
+        return np.var(self.data[feature])
