@@ -136,3 +136,11 @@ class Variability:
         :return:
         """
         return np.sum(np.abs(self.data[feature] - np.mean(self.data[feature]))) / self.data.shape[0]
+
+    def mad(self, feature):
+        """
+        calculate median absolute deviation
+        :param feature:
+        :return:
+        """
+        return ss.median_abs_deviation(self.data[feature])
