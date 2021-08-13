@@ -105,3 +105,26 @@ class Variability:
         :return:
         """
         return np.std(self.data[feature])
+
+    def trimmed_std(self, feature, method='present', proportion=0.1):
+        """
+        trimmed standard deviation
+        :param proportion:
+        :param method:
+        :param feature:
+        :return:
+        """
+        if method == 'present':
+            if isinstance(proportion, float):
+                return np.std(ss.trimboth(self.data[feature], proportion))
+            else:
+                raise ValueError('when use present proportion must be float between 0 and 1.')
+        elif method == 'quartile':
+            if isinstance(proportion, int):
+                return ss.tstd(self.data[feature],
+                               limits=(np.quantile(self.data[feature], proportion),
+                                       np.quantile(self.data[feature], 100 - proportion)))
+            else:
+                raise ValueError('when use quartile proportion must be float between 0 and 100.')
+        else:
+            raise ValueError('wrong method.')
