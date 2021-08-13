@@ -144,3 +144,12 @@ class Variability:
         :return:
         """
         return ss.median_abs_deviation(self.data[feature])
+
+    def inter_quartile_range(self, feature, range=(25, 75)):
+        """
+        calculate range between given quartiles percentile
+        :param range:
+        :param feature:
+        :return:
+        """
+        return ss.iqr(self.data[feature], rng=range)
