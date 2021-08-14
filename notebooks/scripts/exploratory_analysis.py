@@ -190,3 +190,17 @@ class distribution:
 
         else:
             raise ValueError()
+
+    def render(self, size, dpi, subplots=False, sub_count=(1, 1)):
+        """
+        create graphs
+        :return:
+        """
+        if not subplots:
+            return plt.Figure(figsize=size, dpi=dpi)
+        else:
+            fig, axes = plt.subplots(nrows=sub_count[0],
+                                     ncols=sub_count[1],
+                                     figsize=size,
+                                     dpi=dpi)
+            return fig, axes
