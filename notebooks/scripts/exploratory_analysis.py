@@ -267,6 +267,23 @@ class distribution:
         temp = self.data[feature].value_counts() / self.data.shape[0]
         return np.sum(temp.index * temp.values)
 
+    def correlation(self, a, b, method='pearson'):
+        """
+        calculate correlation between variables
+        :param a:
+        :param b:
+        :param method:
+        :return:
+        """
+        if method == 'pearson':
+            return ss.pearsonr(a, b)
+
+        elif method == 'spearman':
+            return ss.spearmanr(a)
+
+        else:
+            raise ValueError('wrong method.')
+
     def hist(self, feature, hue=None,
              fig_size=(12, 6), dpi=300,
              sub_plots=False, sub_structure=(1, 1),
