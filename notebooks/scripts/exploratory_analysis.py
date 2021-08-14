@@ -276,10 +276,10 @@ class distribution:
         :return:
         """
         if method == 'pearson':
-            return ss.pearsonr(a, b)
+            return ss.pearsonr(self.data[a], self.data[b])
 
         elif method == 'spearman':
-            return ss.spearmanr(a)
+            return ss.spearmanr(self.data[a])
 
         else:
             raise ValueError('wrong method.')
