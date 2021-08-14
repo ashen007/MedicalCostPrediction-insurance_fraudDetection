@@ -271,6 +271,7 @@ class distribution:
         :param sub_structure:
         :return:
         """
+
         if not sub_plots:
             if isinstance(feature, str):
                 self.render(size=fig_size, dpi=dpi)
@@ -300,3 +301,44 @@ class distribution:
 
             else:
                 raise ValueError('for sub plots feature must be a list.')
+
+    def boxplot(self, x=None, y=None, sub_cols=None,
+                fig_size=(12, 6), dpi=300,
+                sub_plots=False, sub_structure=(1, 1),
+                save=False, path='filename', format='png'):
+        """
+        histogram
+        :param format:
+        :param x:
+        :param y:
+        :param sub_cols:
+        :param dpi:
+        :param fig_size:
+        :param path:
+        :param save:
+        :param sub_plots:
+        :param sub_structure:
+        :return:
+        """
+
+        if not sub_plots:
+            self.render(size=fig_size, dpi=dpi)
+            sns.boxplot(data=self.data, x=x, y=y)
+
+            if save:
+                plt.savefig(path, format=format)
+
+            plt.show()
+
+        if sub_plots:
+            if isinstance(sub_cols,list):
+                fig, axes = self.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
+                axes = axes.ravel()
+
+                for i in range(axes):
+                    sns.boxplot(data=self.data, x=sub_cols[i], ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
