@@ -204,3 +204,54 @@ class distribution:
                                      figsize=size,
                                      dpi=dpi)
             return fig, axes
+
+    def hist(self, feature, fig_size=(12, 6), dpi=300, sub_plots=False,
+             sub_structure=(1, 1), bins='auto',
+             stat='count', cumulative=False,
+             kde=False, save=False,
+             path='filename', format='png'):
+        """
+        histogram
+        :param format:
+        :param cumulative:
+        :param dpi:
+        :param fig_size:
+        :param path:
+        :param save:
+        :param bins:
+        :param kde:
+        :param stat:
+        :param feature:
+        :param sub_plots:
+        :param sub_structure:
+        :return:
+        """
+        if not sub_plots:
+            if isinstance(feature, str):
+                self.render(size=fig_size, dpi=dpi)
+                sns.histplot(data=self.data, x=feature,
+                             bins=bins, stat=stat,
+                             cumulative=cumulative, kde=kde)
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+        if sub_plots:
+            if isinstance(feature, list):
+                fig, axes = self.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
+                axes = axes.ravel()
+
+                for i in range(axes):
+                    sns.histplot(data=self.data, x=feature[i],
+                                 bins=bins, stat=stat,
+                                 cumulative=cumulative, kde=kde,
+                                 ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            else:
+                raise ValueError('for sub plots feature must be a list.')
