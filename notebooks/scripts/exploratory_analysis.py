@@ -249,6 +249,15 @@ class distribution:
         """
         return ss.kurtosis(self.data[feature], bias=False)
 
+    def mode(self, feature):
+        """
+        most frequent values
+        :param feature:
+        :return:
+        """
+        modal = ss.mode(self.data[feature])
+        return modal[0], modal[1]
+
     def hist(self, feature, hue=None,
              fig_size=(12, 6), dpi=300,
              sub_plots=False, sub_structure=(1, 1),
@@ -257,6 +266,7 @@ class distribution:
              save=False, path='filename', format='png'):
         """
         histogram
+        :param hue:
         :param format:
         :param cumulative:
         :param dpi:
@@ -368,6 +378,7 @@ class distribution:
                  save=False, path='filename', format='png'):
         """
         box and whiskers plot
+        :param hue:
         :param format:
         :param x:
         :param y:
@@ -413,6 +424,7 @@ class distribution:
                     save=False, path='filename', format='png'):
         """
         draw a combination of boxplot and kernel density estimate
+        :param hue:
         :param x:
         :param y:
         :param sub_cols:
