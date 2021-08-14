@@ -307,7 +307,7 @@ class distribution:
                 sub_plots=False, sub_structure=(1, 1),
                 save=False, path='filename', format='png'):
         """
-        histogram
+        box and whiskers plot
         :param format:
         :param x:
         :param y:
@@ -331,7 +331,7 @@ class distribution:
             plt.show()
 
         if sub_plots:
-            if isinstance(sub_cols,list):
+            if isinstance(sub_cols, list):
                 fig, axes = self.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
                 axes = axes.ravel()
 
@@ -342,3 +342,63 @@ class distribution:
                     plt.savefig(path, format=format)
 
                 plt.show()
+            else:
+                raise ValueError('sub_cols must be a list.')
+
+    def violinplot(self, x=None, y=None, sub_cols=None,
+                   fig_size=(12, 6), dpi=300,
+                   split=False, scale='count',
+                   inner='quartile', bw='scott',
+                   sub_plots=False, sub_structure=(1, 1),
+                   save=False, path='filename', format='png'):
+        """
+        draw a combination of boxplot and kernel density estimate
+        :param x:
+        :param y:
+        :param sub_cols:
+        :param fig_size:
+        :param dpi:
+        :param split:
+        :param scale:
+        :param inner:
+        :param bw:
+        :param sub_plots:
+        :param sub_structure:
+        :param save:
+        :param path:
+        :param format:
+        :return:
+        """
+
+        if not sub_plots:
+            self.render(size=fig_size, dpi=dpi)
+            sns.violinplot(data=self.data, x=x, y=y,
+                           split=split,
+                           scale=scale,
+                           inner=inner,
+                           bw=bw)
+
+            if save:
+                plt.savefig(path, format=format)
+
+            plt.show()
+
+        if sub_plots:
+            if isinstance(sub_cols, list):
+                fig, axes = self.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
+                axes = axes.ravel()
+
+                for i in range(axes):
+                    sns.violinplot(data=self.data, x=sub_cols[i],
+                                   split=split,
+                                   scale=scale,
+                                   inner=inner,
+                                   bw=bw,
+                                   ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+            else:
+                raise ValueError('sub_cols must be a list.')
