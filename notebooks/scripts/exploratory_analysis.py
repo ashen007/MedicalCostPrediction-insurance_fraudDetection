@@ -258,6 +258,15 @@ class distribution:
         modal = ss.mode(self.data[feature])
         return modal[0], modal[1]
 
+    def expected_value(self, feature):
+        """
+        calculate expected value of feature
+        :param feature:
+        :return:
+        """
+        temp = self.data[feature].value_counts() / self.data.shape[0]
+        return np.sum(temp.index * temp.values)
+
     def hist(self, feature, hue=None,
              fig_size=(12, 6), dpi=300,
              sub_plots=False, sub_structure=(1, 1),
