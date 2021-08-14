@@ -249,7 +249,7 @@ class distribution:
         """
         return ss.kurtosis(self.data[feature], bias=False)
 
-    def hist(self, feature,
+    def hist(self, feature, hue=None,
              fig_size=(12, 6), dpi=300,
              sub_plots=False, sub_structure=(1, 1),
              bins='auto', stat='count',
@@ -275,7 +275,7 @@ class distribution:
         if not sub_plots:
             if isinstance(feature, str):
                 self.render(size=fig_size, dpi=dpi)
-                sns.histplot(data=self.data, x=feature,
+                sns.histplot(data=self.data, x=feature, hue=hue,
                              bins=bins, stat=stat,
                              cumulative=cumulative, kde=kde)
                 if save:
@@ -289,7 +289,7 @@ class distribution:
                 axes = axes.ravel()
 
                 for i in range(axes):
-                    sns.histplot(data=self.data, x=feature[i],
+                    sns.histplot(data=self.data, x=feature[i], hue=hue,
                                  bins=bins, stat=stat,
                                  cumulative=cumulative, kde=kde,
                                  ax=axes[i])
@@ -302,10 +302,70 @@ class distribution:
             else:
                 raise ValueError('for sub plots feature must be a list.')
 
-    def boxplot(self, x=None, y=None, sub_cols=None,
-                fig_size=(12, 6), dpi=300,
-                sub_plots=False, sub_structure=(1, 1),
-                save=False, path='filename', format='png'):
+    def kde_plot(self, x=None, y=None, hue=None, sub_cols=None,
+                 fig_size=(12, 6), dpi=300,
+                 fill=False, multiple='layer',
+                 bw_adjust=1.0, bw_method="scott",
+                 common_norm=True, common_grid=False,
+                 sub_plots=False, sub_structure=(1, 1),
+                 save=False, path='filename', format='png'):
+        """
+        plot uni-variate or bi-variate distributions using kernel density estimation
+        :param hue:
+        :param x:
+        :param y:
+        :param sub_cols:
+        :param fig_size:
+        :param dpi:
+        :param fill:
+        :param multiple:
+        :param bw_adjust:
+        :param bw_method:
+        :param common_norm:
+        :param common_grid:
+        :param sub_plots:
+        :param sub_structure:
+        :param save:
+        :param path:
+        :param format:
+        :return:
+        """
+
+        if not sub_plots:
+            self.render(size=fig_size, dpi=dpi)
+            sns.kdeplot(data=self.data, x=x, y=y, hue=hue,
+                        fill=fill, multiple=multiple,
+                        bw_adjust=bw_adjust, bw_method=bw_method,
+                        common_norm=common_norm, common_grid=common_grid)
+
+            if save:
+                plt.savefig(path, format=format)
+
+            plt.show()
+
+        if sub_plots:
+            if isinstance(sub_cols, list):
+                fig, axes = self.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
+                axes = axes.ravel()
+
+                for i in range(axes):
+                    sns.kdeplot(data=self.data, x=sub_cols[i], hue=hue,
+                                fill=fill, multiple=multiple,
+                                bw_adjust=bw_adjust, bw_method=bw_method,
+                                common_norm=common_norm, common_grid=common_grid,
+                                ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+            else:
+                raise ValueError('sub_cols must be a list.')
+
+    def box_plot(self, x=None, y=None, hue=None, sub_cols=None,
+                 fig_size=(12, 6), dpi=300,
+                 sub_plots=False, sub_structure=(1, 1),
+                 save=False, path='filename', format='png'):
         """
         box and whiskers plot
         :param format:
@@ -323,7 +383,7 @@ class distribution:
 
         if not sub_plots:
             self.render(size=fig_size, dpi=dpi)
-            sns.boxplot(data=self.data, x=x, y=y)
+            sns.boxplot(data=self.data, x=x, y=y, hue=hue, )
 
             if save:
                 plt.savefig(path, format=format)
@@ -336,7 +396,7 @@ class distribution:
                 axes = axes.ravel()
 
                 for i in range(axes):
-                    sns.boxplot(data=self.data, x=sub_cols[i], ax=axes[i])
+                    sns.boxplot(data=self.data, x=sub_cols[i], hue=hue, ax=axes[i])
 
                 if save:
                     plt.savefig(path, format=format)
@@ -345,12 +405,12 @@ class distribution:
             else:
                 raise ValueError('sub_cols must be a list.')
 
-    def violinplot(self, x=None, y=None, sub_cols=None,
-                   fig_size=(12, 6), dpi=300,
-                   split=False, scale='count',
-                   inner='quartile', bw='scott',
-                   sub_plots=False, sub_structure=(1, 1),
-                   save=False, path='filename', format='png'):
+    def violin_plot(self, x=None, y=None, hue=None, sub_cols=None,
+                    fig_size=(12, 6), dpi=300,
+                    split=False, scale='count',
+                    inner='quartile', bw='scott',
+                    sub_plots=False, sub_structure=(1, 1),
+                    save=False, path='filename', format='png'):
         """
         draw a combination of boxplot and kernel density estimate
         :param x:
@@ -372,7 +432,7 @@ class distribution:
 
         if not sub_plots:
             self.render(size=fig_size, dpi=dpi)
-            sns.violinplot(data=self.data, x=x, y=y,
+            sns.violinplot(data=self.data, x=x, y=y, hue=hue,
                            split=split,
                            scale=scale,
                            inner=inner,
@@ -389,7 +449,7 @@ class distribution:
                 axes = axes.ravel()
 
                 for i in range(axes):
-                    sns.violinplot(data=self.data, x=sub_cols[i],
+                    sns.violinplot(data=self.data, x=sub_cols[i], hue=hue,
                                    split=split,
                                    scale=scale,
                                    inner=inner,
