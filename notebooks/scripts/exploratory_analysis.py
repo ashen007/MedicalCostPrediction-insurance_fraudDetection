@@ -241,6 +241,14 @@ class distribution:
         """
         return ss.skew(self.data[feature], bias=False)
 
+    def kurtosis(self, feature):
+        """
+        indicates the propensity of the data to have extreme values
+        :param feature:
+        :return:
+        """
+        return ss.kurtosis(self.data[feature], bias=False)
+
     def hist(self, feature,
              fig_size=(12, 6), dpi=300,
              sub_plots=False, sub_structure=(1, 1),
