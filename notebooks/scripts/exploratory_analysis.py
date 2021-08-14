@@ -233,6 +233,14 @@ class distribution:
         """
         return self.central_moment(feature, k) / np.sqrt(self.central_moment(feature, 2)) ** k
 
+    def skewness(self, feature):
+        """
+        calculate un-bias metric to identify how much where to distribution skew
+        :param feature:
+        :return:
+        """
+        return ss.skew(self.data[feature], bias=False)
+
     def hist(self, feature,
              fig_size=(12, 6), dpi=300,
              sub_plots=False, sub_structure=(1, 1),
