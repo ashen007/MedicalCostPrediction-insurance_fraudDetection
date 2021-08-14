@@ -163,6 +163,21 @@ class distribution:
     def __init__(self, dataframe):
         self.data = dataframe
 
+    @staticmethod
+    def render(size, dpi, subplots=False, sub_count=(1, 1)):
+        """
+        create graphs
+        :return:
+        """
+        if not subplots:
+            return plt.Figure(figsize=size, dpi=dpi)
+        else:
+            fig, axes = plt.subplots(nrows=sub_count[0],
+                                     ncols=sub_count[1],
+                                     figsize=size,
+                                     dpi=dpi)
+            return fig, axes
+
     def frequency_table(self, feature, bins, type='quantitative', stat='count'):
         """
         calculate frequency statistics
@@ -191,25 +206,39 @@ class distribution:
         else:
             raise ValueError()
 
-    def render(self, size, dpi, subplots=False, sub_count=(1, 1)):
+    def raw_moment(self, feature, k):
         """
-        create graphs
+        calculate raw moment in the distribution
+        :param feature:
+        :param k:
         :return:
         """
-        if not subplots:
-            return plt.Figure(figsize=size, dpi=dpi)
-        else:
-            fig, axes = plt.subplots(nrows=sub_count[0],
-                                     ncols=sub_count[1],
-                                     figsize=size,
-                                     dpi=dpi)
-            return fig, axes
+        return np.sum(self.data[feature] ** k) / self.data.shape[0]
 
-    def hist(self, feature, fig_size=(12, 6), dpi=300, sub_plots=False,
-             sub_structure=(1, 1), bins='auto',
-             stat='count', cumulative=False,
-             kde=False, save=False,
-             path='filename', format='png'):
+    def central_moment(self, feature, k):
+        """
+        calculate central moment in the distribution
+        :param feature:
+        :param k:
+        :return:
+        """
+        return np.sum((self.data[feature] - self.raw_moment(feature, 1)) ** k) / self.data.shape[0]
+
+    def standardized_moment(self, feature, k):
+        """
+        calculate normalized moments
+        :param feature:
+        :param k:
+        :return:
+        """
+        return self.central_moment(feature, k) / np.sqrt(self.central_moment(feature, 2)) ** k
+
+    def hist(self, feature,
+             fig_size=(12, 6), dpi=300,
+             sub_plots=False, sub_structure=(1, 1),
+             bins='auto', stat='count',
+             cumulative=False, kde=False,
+             save=False, path='filename', format='png'):
         """
         histogram
         :param format:
