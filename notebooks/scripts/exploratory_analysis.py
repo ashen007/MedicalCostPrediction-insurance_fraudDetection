@@ -153,3 +153,40 @@ class Variability:
         :return:
         """
         return ss.iqr(self.data[feature], rng=range)
+
+
+class distribution:
+    """
+    examine the distribution metrics and rander visualizing graphs
+    """
+
+    def __init__(self, dataframe):
+        self.data = dataframe
+
+    def frequency_table(self, feature, bins, type='quantitative', stat='count'):
+        """
+        calculate frequency statistics
+        :param int bins:
+        :param str feature:
+        :param str type:
+        :param str stat:
+        :return:
+        """
+        if type == 'quantitative':
+            if stat == 'count':
+                return pd.cut(self.data[feature], bins).value_counts()
+            elif stat == 'frequency':
+                return pd.cut(self.data[feature], bins).value_counts() / self.data.shape[0]
+            else:
+                raise ValueError()
+
+        elif type == 'qualitative':
+            if stat == 'count':
+                return self.data[feature].value_counts()
+            elif stat == 'frequency':
+                return self.data[feature].value_counts() / self.data.shape[0]
+            else:
+                raise ValueError()
+
+        else:
+            raise ValueError()
