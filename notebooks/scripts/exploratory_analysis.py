@@ -669,7 +669,7 @@ class Relation:
         if (isinstance(x, list) or isinstance(y, list)) and matrix:
             raise ValueError('can not create matrix using different dimension x and y.')
 
-    def contour_plot(self, x=None, y=None, hue=None, size=None, matrix=False,
+    def contour_plot(self, x=None, y=None, hue=None, matrix=False,
                      fig_size=(12, 6), dpi=300, color=None, palette=None, fill=False,
                      sub_structure=(1, 1), save=False, path='filename', format='png'):
         """
@@ -677,7 +677,6 @@ class Relation:
         :param x:
         :param y:
         :param hue:
-        :param size:
         :param matrix:
         :param fig_size:
         :param dpi:
@@ -692,7 +691,7 @@ class Relation:
         """
         if isinstance(x, str) and isinstance(y, str) and not matrix:
             self._factory.render(size=fig_size, dpi=dpi)
-            sns.kdeplot(x=x, y=y, hue=hue,
+            sns.kdeplot(x=x, y=y, hue=hue, fill=fill,
                         color=color, palette=palette)
 
             if save:
@@ -706,7 +705,7 @@ class Relation:
                 axes = axes.ravel()
 
                 for i in range(len(x)):
-                    sns.kdeplot(x=x[i], y=y, hue=hue, data=self.data,
+                    sns.kdeplot(x=x[i], y=y, hue=hue, data=self.data, fill=fill,
                                 color=color, palette=palette, ax=axes[i])
 
                 if save:
@@ -719,7 +718,7 @@ class Relation:
                 axes = axes.ravel()
 
                 for i in range(len(y)):
-                    sns.kdeplot(x=x, y=y[i], hue=hue, data=self.data,
+                    sns.kdeplot(x=x, y=y[i], hue=hue, data=self.data, fill=fill,
                                 color=color, palette=palette, ax=axes[i])
 
                 if save:
@@ -760,7 +759,7 @@ class Relation:
                 axes = axes.ravel()
 
                 for i in range(len(x)):
-                    sns.kdeplot(x=x[i], y=y[i], hue=hue, data=self.data,
+                    sns.kdeplot(x=x[i], y=y[i], hue=hue, data=self.data, fill=fill,
                                 color=color, palette=palette, ax=axes[i])
 
                 if save:
@@ -776,3 +775,35 @@ class Relation:
 
         if (isinstance(x, list) or isinstance(y, list)) and matrix:
             raise ValueError('can not create matrix using different dimension x and y.')
+
+    def hexagonal_plot(self, x=None, y=None, hue=None, height=6,
+                       fig_size=(12, 6), dpi=300, color=None, palette=None,
+                       save=False, path='filename', format='png'):
+        """
+        create hexagonal plot
+        :param height:
+        :param x:
+        :param y:
+        :param hue:
+        :param fig_size:
+        :param dpi:
+        :param color:
+        :param palette:
+        :param save:
+        :param path:
+        :param format:
+        :return:
+        """
+
+        if isinstance(x, str) and isinstance(y, str):
+            self._factory.render(size=fig_size, dpi=dpi)
+            sns.jointplot(data=self.data, x=x, y=y, hue=hue,
+                          height=height, color=color, palette=palette)
+
+            if save:
+                plt.savefig(path, format=format)
+
+            plt.show()
+
+        else:
+            raise ValueError('x and y must be column names.')
