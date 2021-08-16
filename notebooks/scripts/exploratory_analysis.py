@@ -562,12 +562,13 @@ class Relation:
         else:
             raise ValueError('wrong method.')
 
-    def relation_plot(self, x=None, y=None, hue=None, matrix=False,
-                      fig_size=(12, 6), dpi=300, color=None, palette=None,
-                      sub_structure=(1, 1), save=False, path='filename', format='png'):
+    def scatter_plot(self, x=None, y=None, hue=None, size=None, matrix=False,
+                     fig_size=(12, 6), dpi=300, color=None, palette=None,
+                     sub_structure=(1, 1), save=False, path='filename', format='png'):
         """
         use scatter plots and scatter matrix to examine correlation
         among features.
+        :param size:
         :param format:
         :param path:
         :param save:
@@ -585,7 +586,7 @@ class Relation:
 
         if isinstance(x, str) and isinstance(y, str) and not matrix:
             self._factory.render(size=fig_size, dpi=dpi)
-            sns.scatterplot(x=x, y=y, hue=hue,
+            sns.scatterplot(x=x, y=y, hue=hue, size=size,
                             color=color, palette=palette)
 
             if save:
@@ -599,7 +600,7 @@ class Relation:
                 axes = axes.ravel()
 
                 for i in range(len(x)):
-                    sns.scatterplot(x=x[i], y=y, hue=hue, data=self.data,
+                    sns.scatterplot(x=x[i], y=y, hue=hue, size=size, data=self.data,
                                     color=color, palette=palette, ax=axes[i])
 
                 if save:
@@ -612,8 +613,30 @@ class Relation:
                 axes = axes.ravel()
 
                 for i in range(len(y)):
-                    sns.scatterplot(x=x, y=y[i], hue=hue, data=self.data,
+                    sns.scatterplot(x=x, y=y[i], hue=hue, size=size, data=self.data,
                                     color=color, palette=palette, ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            else:
+                raise ValueError()
+
+        if (isinstance(x, list) or isinstance(y, list)) and matrix:
+            if isinstance(x, list):
+                self._factory.render(size=fig_size, dpi=dpi)
+                sns.pairplot(self.data[x], hue=hue, kind='scatter', diag_kind='kde')
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            elif isinstance(y, list):
+                self._factory.render(size=fig_size, dpi=dpi)
+                sns.pairplot(self.data[y], hue=hue, kind='scatter', diag_kind='kde')
 
                 if save:
                     plt.savefig(path, format=format)
@@ -629,8 +652,116 @@ class Relation:
                 axes = axes.ravel()
 
                 for i in range(len(x)):
-                    sns.scatterplot(x=x[i], y=y[i], hue=hue, data=self.data,
+                    sns.scatterplot(x=x[i], y=y[i], hue=hue, size=size, data=self.data,
                                     color=color, palette=palette, ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            else:
+                raise ValueError('x and y must be same length.')
+
+        if isinstance(x, list) and isinstance(y, list) and matrix:
+            raise ValueError('to create scatter matrix only one dimension parameter should give.')
+
+        if (isinstance(x, list) or isinstance(y, list)) and matrix:
+            raise ValueError('can not create matrix using different dimension x and y.')
+
+    def contour_plot(self, x=None, y=None, hue=None, size=None, matrix=False,
+                     fig_size=(12, 6), dpi=300, color=None, palette=None, fill=False,
+                     sub_structure=(1, 1), save=False, path='filename', format='png'):
+        """
+        create contour plots
+        :param x:
+        :param y:
+        :param hue:
+        :param size:
+        :param matrix:
+        :param fig_size:
+        :param dpi:
+        :param color:
+        :param palette:
+        :param fill:
+        :param sub_structure:
+        :param save:
+        :param path:
+        :param format:
+        :return:
+        """
+        if isinstance(x, str) and isinstance(y, str) and not matrix:
+            self._factory.render(size=fig_size, dpi=dpi)
+            sns.kdeplot(x=x, y=y, hue=hue,
+                        color=color, palette=palette)
+
+            if save:
+                plt.savefig(path, format=format)
+
+            plt.show()
+
+        if (isinstance(x, list) or isinstance(y, list)) and not matrix:
+            if isinstance(x, list):
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                axes = axes.ravel()
+
+                for i in range(len(x)):
+                    sns.kdeplot(x=x[i], y=y, hue=hue, data=self.data,
+                                color=color, palette=palette, ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            elif isinstance(y, list):
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                axes = axes.ravel()
+
+                for i in range(len(y)):
+                    sns.kdeplot(x=x, y=y[i], hue=hue, data=self.data,
+                                color=color, palette=palette, ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            else:
+                raise ValueError()
+
+        if (isinstance(x, list) or isinstance(y, list)) and matrix:
+            if isinstance(x, list):
+                self._factory.render(size=fig_size, dpi=dpi)
+                g = sns.pairplot(self.data[x], hue=hue, kind='scatter', diag_kind='hist')
+                g.map_lower(sns.kdeplot, color='.2')
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            elif isinstance(y, list):
+                self._factory.render(size=fig_size, dpi=dpi)
+                g = sns.pairplot(self.data[y], hue=hue, kind='scatter', diag_kind='hist')
+                g.map_lower(sns.kdeplot, color='.2')
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            else:
+                raise ValueError()
+
+        if isinstance(x, list) and isinstance(y, list) and not matrix:
+            if len(x) == len(y):
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                axes = axes.ravel()
+
+                for i in range(len(x)):
+                    sns.kdeplot(x=x[i], y=y[i], hue=hue, data=self.data,
+                                color=color, palette=palette, ax=axes[i])
 
                 if save:
                     plt.savefig(path, format=format)
