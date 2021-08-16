@@ -6,7 +6,7 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 
 
-class _Factory_:
+class Factory:
     """
     share properties and methods
     """
@@ -303,13 +303,15 @@ class distribution:
         return np.sum(temp.index * temp.values)
 
     def hist(self, feature, hue=None,
-             fig_size=(12, 6), dpi=300,
+             fig_size=(12, 6), dpi=300, color=None, palette=None,
              sub_plots=False, sub_structure=(1, 1),
              bins='auto', stat='count',
              cumulative=False, kde=False,
              save=False, path='filename', format='png'):
         """
         histogram
+        :param palette:
+        :param color:
         :param hue:
         :param format:
         :param cumulative:
@@ -331,7 +333,8 @@ class distribution:
                 self._factory.render(size=fig_size, dpi=dpi)
                 sns.histplot(data=self.data, x=feature, hue=hue,
                              bins=bins, stat=stat,
-                             cumulative=cumulative, kde=kde)
+                             cumulative=cumulative, kde=kde,
+                             color=color, palette=palette)
                 if save:
                     plt.savefig(path, format=format)
 
@@ -346,6 +349,7 @@ class distribution:
                     sns.histplot(data=self.data, x=feature[i], hue=hue,
                                  bins=bins, stat=stat,
                                  cumulative=cumulative, kde=kde,
+                                 color=color, palette=palette,
                                  ax=axes[i])
 
                 if save:
@@ -357,7 +361,7 @@ class distribution:
                 raise ValueError('for sub plots feature must be a list.')
 
     def kde_plot(self, x=None, y=None, hue=None, sub_cols=None,
-                 fig_size=(12, 6), dpi=300,
+                 fig_size=(12, 6), dpi=300, color=None, palette=None,
                  fill=False, multiple='layer',
                  bw_adjust=1.0, bw_method="scott",
                  common_norm=True, common_grid=False,
@@ -390,7 +394,8 @@ class distribution:
             sns.kdeplot(data=self.data, x=x, y=y, hue=hue,
                         fill=fill, multiple=multiple,
                         bw_adjust=bw_adjust, bw_method=bw_method,
-                        common_norm=common_norm, common_grid=common_grid)
+                        common_norm=common_norm, common_grid=common_grid,
+                        color=color, palette=palette)
 
             if save:
                 plt.savefig(path, format=format)
@@ -407,6 +412,7 @@ class distribution:
                                 fill=fill, multiple=multiple,
                                 bw_adjust=bw_adjust, bw_method=bw_method,
                                 common_norm=common_norm, common_grid=common_grid,
+                                color=color, palette=palette,
                                 ax=axes[i])
 
                 if save:
@@ -417,7 +423,7 @@ class distribution:
                 raise ValueError('sub_cols must be a list.')
 
     def box_plot(self, x=None, y=None, hue=None, sub_cols=None,
-                 fig_size=(12, 6), dpi=300,
+                 fig_size=(12, 6), dpi=300, color=None, palette=None,
                  sub_plots=False, sub_structure=(1, 1),
                  save=False, path='filename', format='png'):
         """
@@ -438,7 +444,8 @@ class distribution:
 
         if not sub_plots:
             self._factory.render(size=fig_size, dpi=dpi)
-            sns.boxplot(data=self.data, x=x, y=y, hue=hue, )
+            sns.boxplot(data=self.data, x=x, y=y, hue=hue,
+                        color=color, palette=palette)
 
             if save:
                 plt.savefig(path, format=format)
@@ -451,7 +458,8 @@ class distribution:
                 axes = axes.ravel()
 
                 for i in range(axes):
-                    sns.boxplot(data=self.data, x=sub_cols[i], hue=hue, ax=axes[i])
+                    sns.boxplot(data=self.data, x=sub_cols[i], hue=hue,
+                                color=color, palette=palette, ax=axes[i])
 
                 if save:
                     plt.savefig(path, format=format)
@@ -461,13 +469,15 @@ class distribution:
                 raise ValueError('sub_cols must be a list.')
 
     def violin_plot(self, x=None, y=None, hue=None, sub_cols=None,
-                    fig_size=(12, 6), dpi=300,
+                    fig_size=(12, 6), dpi=300, color=None, palette=None,
                     split=False, scale='count',
                     inner='quartile', bw='scott',
                     sub_plots=False, sub_structure=(1, 1),
                     save=False, path='filename', format='png'):
         """
         draw a combination of boxplot and kernel density estimate
+        :param palette:
+        :param color:
         :param hue:
         :param x:
         :param y:
@@ -492,7 +502,8 @@ class distribution:
                            split=split,
                            scale=scale,
                            inner=inner,
-                           bw=bw)
+                           bw=bw,
+                           color=color, palette=palette)
 
             if save:
                 plt.savefig(path, format=format)
@@ -510,6 +521,7 @@ class distribution:
                                    scale=scale,
                                    inner=inner,
                                    bw=bw,
+                                   color=color, palette=palette,
                                    ax=axes[i])
 
                 if save:
@@ -550,10 +562,15 @@ class Relation:
         else:
             raise ValueError('wrong method.')
 
-    def relation_plot(self, x=None, y=None, hue=None, matrix=False):
+    def relation_plot(self, x=None, y=None, hue=None, matrix=False,
+                      fig_size=(12, 6), dpi=300, color=None, palette=None):
         """
         use scatter plots and scatter matrix to examine correlation
         among features.
+        :param palette:
+        :param color:
+        :param dpi:
+        :param fig_size:
         :param x:
         :param y:
         :param hue:
@@ -561,4 +578,6 @@ class Relation:
         :return:
         """
         if isinstance(x, str) and isinstance(y, str) and not matrix:
-            return
+            self._factory.render(size=fig_size, dpi=dpi)
+            sns.scatterplot(x=x, y=y, hue=hue, color=color, palette=palette)
+            plt.show()
