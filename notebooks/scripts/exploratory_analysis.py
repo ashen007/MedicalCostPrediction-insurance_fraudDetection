@@ -6,9 +6,9 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 
 
-class CentralTendency:
+class _Factory_:
     """
-    estimate of location
+    share properties and methods
     """
 
     def __init__(self, dataframe):
@@ -16,7 +16,47 @@ class CentralTendency:
         initialize dataframe
         :param dataframe dataframe: dataframe want to examine
         """
+        super().__init__()
         self.data = dataframe
+
+    def render(self, size, dpi, subplots=False, sub_count=(1, 1)):
+        """
+        create graphs
+        :return:
+        """
+        if not subplots:
+            return plt.Figure(figsize=size, dpi=dpi)
+        else:
+            fig, axes = plt.subplots(nrows=sub_count[0],
+                                     ncols=sub_count[1],
+                                     figsize=size,
+                                     dpi=dpi)
+            return fig, axes
+
+    def __getattribute__(self, item):
+        """
+        get properties
+        :param item:
+        :return:
+        """
+        if item == 'data':
+            return super().__getattribute__('data')
+
+        return super().__getattribute__(item)
+
+
+class CentralTendency:
+    """
+    estimate of location
+    """
+
+    def __init__(self, data_factory=None):
+        """
+        initialize dataframe
+        :param object data_factory: dataframe want to examine
+        """
+        self._factory = data_factory
+        self.data = self._factory.__getattribute__('data')
 
     def typical_value(self, feature):
         """
@@ -87,8 +127,13 @@ class Variability:
     dispersion of the data
     """
 
-    def __init__(self, dataframe):
-        self.data = dataframe
+    def __init__(self, data_factory=None):
+        """
+        initialize dataframe
+        :param object data_factory: dataframe want to examine
+        """
+        self._factory = data_factory
+        self.data = self._factory.__getattribute__('data')
 
     def variance(self, feature):
         """
@@ -160,23 +205,13 @@ class distribution:
     examine the distribution metrics and rander visualizing graphs
     """
 
-    def __init__(self, dataframe):
-        self.data = dataframe
-
-    @staticmethod
-    def render(size, dpi, subplots=False, sub_count=(1, 1)):
+    def __init__(self, data_factory=None):
         """
-        create graphs
-        :return:
+        initialize dataframe
+        :param object data_factory: dataframe want to examine
         """
-        if not subplots:
-            return plt.Figure(figsize=size, dpi=dpi)
-        else:
-            fig, axes = plt.subplots(nrows=sub_count[0],
-                                     ncols=sub_count[1],
-                                     figsize=size,
-                                     dpi=dpi)
-            return fig, axes
+        self._factory = data_factory
+        self.data = self._factory.__getattribute__('data')
 
     def frequency_table(self, feature, bins, type='quantitative', stat='count'):
         """
@@ -293,7 +328,7 @@ class distribution:
 
         if not sub_plots:
             if isinstance(feature, str):
-                self.render(size=fig_size, dpi=dpi)
+                self._factory.render(size=fig_size, dpi=dpi)
                 sns.histplot(data=self.data, x=feature, hue=hue,
                              bins=bins, stat=stat,
                              cumulative=cumulative, kde=kde)
@@ -304,7 +339,7 @@ class distribution:
 
         if sub_plots:
             if isinstance(feature, list):
-                fig, axes = self.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
                 axes = axes.ravel()
 
                 for i in range(axes):
@@ -351,7 +386,7 @@ class distribution:
         """
 
         if not sub_plots:
-            self.render(size=fig_size, dpi=dpi)
+            self._factory.render(size=fig_size, dpi=dpi)
             sns.kdeplot(data=self.data, x=x, y=y, hue=hue,
                         fill=fill, multiple=multiple,
                         bw_adjust=bw_adjust, bw_method=bw_method,
@@ -364,7 +399,7 @@ class distribution:
 
         if sub_plots:
             if isinstance(sub_cols, list):
-                fig, axes = self.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
                 axes = axes.ravel()
 
                 for i in range(axes):
@@ -402,7 +437,7 @@ class distribution:
         """
 
         if not sub_plots:
-            self.render(size=fig_size, dpi=dpi)
+            self._factory.render(size=fig_size, dpi=dpi)
             sns.boxplot(data=self.data, x=x, y=y, hue=hue, )
 
             if save:
@@ -412,7 +447,7 @@ class distribution:
 
         if sub_plots:
             if isinstance(sub_cols, list):
-                fig, axes = self.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
                 axes = axes.ravel()
 
                 for i in range(axes):
@@ -452,7 +487,7 @@ class distribution:
         """
 
         if not sub_plots:
-            self.render(size=fig_size, dpi=dpi)
+            self._factory.render(size=fig_size, dpi=dpi)
             sns.violinplot(data=self.data, x=x, y=y, hue=hue,
                            split=split,
                            scale=scale,
@@ -466,7 +501,7 @@ class distribution:
 
         if sub_plots:
             if isinstance(sub_cols, list):
-                fig, axes = self.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
                 axes = axes.ravel()
 
                 for i in range(axes):
@@ -485,13 +520,18 @@ class distribution:
                 raise ValueError('sub_cols must be a list.')
 
 
-class Realtion:
+class Relation:
     """
     examine relation between features
     """
 
-    def __init__(self, dataframe):
-        self.data = dataframe
+    def __init__(self, data_factory=None):
+        """
+        initialize dataframe
+        :param object data_factory: dataframe want to examine
+        """
+        self._factory = data_factory
+        self.data = self._factory.__getattribute__('data')
 
     def correlation(self, a, b, method='pearson'):
         """
@@ -511,4 +551,14 @@ class Realtion:
             raise ValueError('wrong method.')
 
     def relation_plot(self, x=None, y=None, hue=None, matrix=False):
-        return
+        """
+        use scatter plots and scatter matrix to examine correlation
+        among features.
+        :param x:
+        :param y:
+        :param hue:
+        :param matrix:
+        :return:
+        """
+        if isinstance(x, str) and isinstance(y, str) and not matrix:
+            return
