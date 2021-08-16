@@ -563,10 +563,15 @@ class Relation:
             raise ValueError('wrong method.')
 
     def relation_plot(self, x=None, y=None, hue=None, matrix=False,
-                      fig_size=(12, 6), dpi=300, color=None, palette=None):
+                      fig_size=(12, 6), dpi=300, color=None, palette=None,
+                      sub_structure=(1, 1), save=False, path='filename', format='png'):
         """
         use scatter plots and scatter matrix to examine correlation
         among features.
+        :param format:
+        :param path:
+        :param save:
+        :param sub_structure:
         :param palette:
         :param color:
         :param dpi:
@@ -577,7 +582,66 @@ class Relation:
         :param matrix:
         :return:
         """
+
         if isinstance(x, str) and isinstance(y, str) and not matrix:
             self._factory.render(size=fig_size, dpi=dpi)
-            sns.scatterplot(x=x, y=y, hue=hue, color=color, palette=palette)
+            sns.scatterplot(x=x, y=y, hue=hue,
+                            color=color, palette=palette)
+
+            if save:
+                plt.savefig(path, format=format)
+
             plt.show()
+
+        if (isinstance(x, list) or isinstance(y, list)) and not matrix:
+            if isinstance(x, list):
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                axes = axes.ravel()
+
+                for i in range(len(x)):
+                    sns.scatterplot(x=x[i], y=y, hue=hue, data=self.data,
+                                    color=color, palette=palette, ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            elif isinstance(y, list):
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                axes = axes.ravel()
+
+                for i in range(len(y)):
+                    sns.scatterplot(x=x, y=y[i], hue=hue, data=self.data,
+                                    color=color, palette=palette, ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            else:
+                raise ValueError()
+
+        if isinstance(x, list) and isinstance(y, list) and not matrix:
+            if len(x) == len(y):
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                axes = axes.ravel()
+
+                for i in range(len(x)):
+                    sns.scatterplot(x=x[i], y=y[i], hue=hue, data=self.data,
+                                    color=color, palette=palette, ax=axes[i])
+
+                if save:
+                    plt.savefig(path, format=format)
+
+                plt.show()
+
+            else:
+                raise ValueError('x and y must be same length.')
+
+        if isinstance(x, list) and isinstance(y, list) and matrix:
+            raise ValueError('to create scatter matrix only one dimension parameter should give.')
+
+        if (isinstance(x, list) or isinstance(y, list)) and matrix:
+            raise ValueError('can not create matrix using different dimension x and y.')
