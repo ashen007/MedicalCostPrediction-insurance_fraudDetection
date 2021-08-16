@@ -267,23 +267,6 @@ class distribution:
         temp = self.data[feature].value_counts() / self.data.shape[0]
         return np.sum(temp.index * temp.values)
 
-    def correlation(self, a, b, method='pearson'):
-        """
-        calculate correlation between variables
-        :param a:
-        :param b:
-        :param method:
-        :return:
-        """
-        if method == 'pearson':
-            return ss.pearsonr(self.data[a], self.data[b])
-
-        elif method == 'spearman':
-            return ss.spearmanr(self.data[a])
-
-        else:
-            raise ValueError('wrong method.')
-
     def hist(self, feature, hue=None,
              fig_size=(12, 6), dpi=300,
              sub_plots=False, sub_structure=(1, 1),
@@ -500,3 +483,32 @@ class distribution:
                 plt.show()
             else:
                 raise ValueError('sub_cols must be a list.')
+
+
+class Realtion:
+    """
+    examine relation between features
+    """
+
+    def __init__(self, dataframe):
+        self.data = dataframe
+
+    def correlation(self, a, b, method='pearson'):
+        """
+        calculate correlation between variables
+        :param a:
+        :param b:
+        :param method:
+        :return:
+        """
+        if method == 'pearson':
+            return ss.pearsonr(self.data[a], self.data[b])
+
+        elif method == 'spearman':
+            return ss.spearmanr(self.data[a])
+
+        else:
+            raise ValueError('wrong method.')
+
+    def relation_plot(self, x=None, y=None, hue=None, matrix=False):
+        return
