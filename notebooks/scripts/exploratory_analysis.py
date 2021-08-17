@@ -134,7 +134,8 @@ class CentralTendency:
         temp.iloc[:int(self.data.shape[0] * portion)] = np.median(self.data[feature])
         temp.iloc[-int(self.data.shape[0] * portion):] = np.median(self.data[feature])
 
-        return np.mean(temp)
+        return {'mean': np.mean(temp),
+                'standard error': ss.sem(temp)}
 
 
 class Variability:
