@@ -64,7 +64,8 @@ class CentralTendency:
         :param str feature: column name
         :return:
         """
-        return np.mean(self.data[feature])
+        return {'mean': np.mean(self.data[feature]),
+                'standard error': ss.sem(self.data[feature])}
 
     def trimmed_mean(self, feature, method='both', proportion=0.1):
         """
@@ -77,23 +78,37 @@ class CentralTendency:
         if method in ['start', 'end', 'both']:
             if isinstance(proportion, float):
                 if method == 'start':
-                    return np.mean(ss.trim1(self.data[feature], proportiontocut=proportion, tail='left'))
+                    return {'mean': np.mean(ss.trim1(self.data[feature],
+                                                     proportiontocut=proportion, tail='left')),
+                            'standard error': ss.sem(ss.trim1(self.data[feature],
+                                                              proportiontocut=proportion, tail='left'))}
                 elif method == 'end':
-                    return np.mean(ss.trim1(self.data[feature], proportiontocut=proportion, tail='right'))
+                    return {'mean': np.mean(ss.trim1(self.data[feature],
+                                                     proportiontocut=proportion, tail='right')),
+                            'standard error': ss.sem(ss.trim1(self.data[feature],
+                                                              proportiontocut=proportion, tail='right'))}
                 else:
-                    return ss.trim_mean(self.data[feature], proportiontocut=proportion)
+                    return {'mean': ss.trim_mean(self.data[feature],
+                                                 proportiontocut=proportion),
+                            'standard error': ss.sem(ss.trimboth(self.data[feature],
+                                                                 proportiontocut=proportion))}
 
             elif isinstance(proportion, int):
                 lower_bound = np.percentile(self.data[feature], proportion / 100)
                 upper_bound = np.percentile(self.data[feature], (100 - proportion) / 100)
 
                 if method == 'start':
-                    return np.mean(self.data[self.data[feature] > lower_bound][feature])
+                    return {'mean': np.mean(self.data[self.data[feature] > lower_bound][feature]),
+                            'standard error': ss.sem(self.data[self.data[feature] > lower_bound][feature])}
                 elif method == 'end':
-                    return np.mean(self.data[self.data[feature] < upper_bound][feature])
+                    return {'mean': np.mean(self.data[self.data[feature] < upper_bound][feature]),
+                            'standard error': ss.sem(self.data[self.data[feature] < upper_bound][feature])}
                 else:
-                    return np.mean(
-                        self.data[(self.data[feature] > lower_bound) & (self.data[feature] < upper_bound)][feature])
+                    return {'mean': np.mean(
+                        self.data[(self.data[feature] > lower_bound) & (self.data[feature] < upper_bound)][feature]),
+                        'standard error': ss.sem(
+                            self.data[(self.data[feature] > lower_bound) & (self.data[feature] < upper_bound)][
+                                feature])}
 
             else:
                 raise ValueError('proportion must be int or a float.')
