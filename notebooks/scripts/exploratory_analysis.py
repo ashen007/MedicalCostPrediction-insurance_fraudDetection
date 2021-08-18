@@ -934,3 +934,46 @@ class four_plots:
             plt.savefig(path, format=format)
 
         plt.show()
+
+    def four_plot(self, feature, lag=1, fig_size=(24, 18), dpi=300, color=None, palette=None,
+                  save=False, path='filename', format='png'):
+        """
+        all 4 plots in one graph
+        :param feature:
+        :param lag:
+        :param fig_size:
+        :param dpi:
+        :param color:
+        :param palette:
+        :param save:
+        :param path:
+        :param format:
+        :return:
+        """
+        fig, axes = self._factory.render(fig_size=fig_size, dpi=dpi, sub_structure=[2, 2], subplots=True)
+        axes = axes.ravel()
+
+        bins = np.linspace(0, 100, self.data.shape[0])
+        std_norm = np.quantile(np.random.standard_normal(self.data.shape[0]), bins)
+        input_data = np.quantile(self.data[feature], bins)
+
+        sns.lineplot(x=np.array(0, self.data[feature].shape[0], 1),
+                     y=np.sin(self.data[feature]),
+                     color=color, palette=palette,
+                     ax=axes[0])
+        sns.scatterplot(x=self.data[feature],
+                        y=self.data[feature].shift(lag),
+                        color=color, palette=palette,
+                        ax=axes[1])
+        sns.histplot(x=self.data[feature],
+                     color=color, palette=palette,
+                     ax=axes[2])
+        sns.regplot(x=std_norm,
+                    y=input_data,
+                    color=color, palette=palette,
+                    ax=axes[3])
+
+        if save:
+            plt.savefig(path, format=format)
+
+        plt.show()
