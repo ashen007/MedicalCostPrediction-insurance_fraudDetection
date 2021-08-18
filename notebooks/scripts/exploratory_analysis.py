@@ -882,3 +882,26 @@ class four_plots:
             plt.savefig(path, format=format)
 
         plt.show()
+
+    def hist_plot(self, feature, fig_size=(12, 6), dpi=300, color=None, palette=None,
+                  save=False, path='filename', format='png'):
+        """
+        create histogram plot to examine fixed distribution of data
+        :param feature:
+        :param fig_size:
+        :param dpi:
+        :param color:
+        :param palette:
+        :param save:
+        :param path:
+        :param format:
+        :return:
+        """
+        self._factory.render(fig_size=fig_size, dpi=dpi)
+        sns.histplot(x=self.data[feature],
+                     color=color, palette=palette)
+
+        if save:
+            plt.savefig(path, format=format)
+
+        plt.show()
