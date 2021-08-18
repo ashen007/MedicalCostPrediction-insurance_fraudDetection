@@ -823,3 +823,24 @@ class Relation:
 
         else:
             raise ValueError('x and y must be column names.')
+
+
+class four_plots:
+    """
+    create 4-plot to check assumptions
+    """
+
+    def __init__(self, data_factory=None):
+        self._factory = data_factory
+        self.data = self._factory.__getattribute__('data')
+
+    def run_test(self, feature, fig_size=(12, 6), dpi=300, color=None, palette=None,
+                 save=False, path='filename', format='png'):
+        self._factory.render(fig_size=fig_size, dpi=dpi)
+        sns.lineplot(x=np.array(0, self.data[feature].shape[0], 1),
+                     y=np.sin(self.data[feature]))
+
+        if save:
+            plt.savefig(path, format=format)
+
+        plt.show()
