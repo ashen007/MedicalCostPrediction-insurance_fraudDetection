@@ -836,9 +836,47 @@ class four_plots:
 
     def run_test(self, feature, fig_size=(12, 6), dpi=300, color=None, palette=None,
                  save=False, path='filename', format='png'):
+        """
+        create run sequence plot to check drifts and fixed variation, fixed location
+        :param feature:
+        :param fig_size:
+        :param dpi:
+        :param color:
+        :param palette:
+        :param save:
+        :param path:
+        :param format:
+        :return:
+        """
         self._factory.render(fig_size=fig_size, dpi=dpi)
         sns.lineplot(x=np.array(0, self.data[feature].shape[0], 1),
-                     y=np.sin(self.data[feature]))
+                     y=np.sin(self.data[feature]),
+                     color=color, palette=palette)
+
+        if save:
+            plt.savefig(path, format=format)
+
+        plt.show()
+
+    def lag_plot(self, feature, lag=1, fig_size=(12, 6), dpi=300, color=None, palette=None,
+                 save=False, path='filename', format='png'):
+        """
+        create lag plot to examine randomness of data
+        :param lag:
+        :param feature:
+        :param fig_size:
+        :param dpi:
+        :param color:
+        :param palette:
+        :param save:
+        :param path:
+        :param format:
+        :return:
+        """
+        self._factory.render(fig_size=fig_size, dpi=dpi)
+        sns.scatterplot(x=self.data[feature],
+                        y=self.data[feature].shift(lag),
+                        color=color, palette=palette)
 
         if save:
             plt.savefig(path, format=format)
