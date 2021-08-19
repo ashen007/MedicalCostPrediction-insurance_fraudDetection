@@ -162,6 +162,18 @@ def log_normal_dist(shape=1, loc=0, scale=1, size=100):
     return ss.lognorm.rvs(shape, size=size, loc=loc, scale=scale)
 
 
+def power_log_norm_dist(shape=(1, 1), loc=0, scale=1, size=100):
+    """
+    log normal random variable
+    :param shape:
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.powerlognorm.rvs(shape[0], shape[1], size=size, loc=loc, scale=scale)
+
+
 def weibull_min_dist(shape=1, loc=0, scale=1, size=100):
     """
     weibull minimum random variable
