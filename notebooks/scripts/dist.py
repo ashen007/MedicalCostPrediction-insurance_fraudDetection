@@ -69,7 +69,7 @@ def gamma_dist(shape=1, loc=0, scale=1, size=100):
     :param size:
     :return:
     """
-    return ss.gamma.rvs(size=size, loc=loc, scale=scale, shape=shape)
+    return ss.gamma.rvs(shape, size=size, loc=loc, scale=scale)
 
 
 def exponential_dist(loc=0, scale=1, size=100):
@@ -92,4 +92,16 @@ def chi_square_dist(shape=1, loc=0, scale=1, size=100):
     :param size:
     :return:
     """
-    return ss.chi2.rvs(size=size, loc=loc, scale=scale, shape=shape)
+    return ss.chi2.rvs(shape, size=size, loc=loc, scale=scale)
+
+
+def beta_dist(shape=(1, 1), loc=0, scale=1, size=100):
+    """
+    gamma random variable
+    :param shape:
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.beta.rvs(shape[0], shape[1], size=size, loc=loc, scale=scale)
