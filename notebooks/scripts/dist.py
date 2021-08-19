@@ -117,3 +117,15 @@ def log_normal_dist(shape=1, loc=0, scale=1, size=100):
     :return:
     """
     return ss.lognorm.rvs(shape, size=size, loc=loc, scale=scale)
+
+
+def weibull_min_dist(shape=1, loc=0, scale=1, size=100):
+    """
+    weibull minimum random variable
+    :param shape:
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.lognorm.rvs(shape, size=size, loc=loc, scale=scale)
