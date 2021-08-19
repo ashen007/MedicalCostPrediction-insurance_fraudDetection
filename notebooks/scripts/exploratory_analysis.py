@@ -858,6 +858,29 @@ class four_plots:
 
         plt.show()
 
+    def auto_corr_plot(self, feature, fig_size=(12, 6), dpi=300, color=None,
+                       save=False, path='filename', format='png'):
+        """
+        create auto-correlation plot to examine randomness of data
+        :param feature:
+        :param fig_size:
+        :param dpi:
+        :param color:
+        :param palette:
+        :param save:
+        :param path:
+        :param format:
+        :return:
+        """
+        self._factory.render(fig_size=fig_size, dpi=dpi)
+        pd.plotting.autocorrelation_plot(self.data[feature],
+                                         color=color)
+
+        if save:
+            plt.savefig(path, format=format)
+
+        plt.show()
+
     def lag_plot(self, feature, lag=1, fig_size=(12, 6), dpi=300, color=None, palette=None,
                  save=False, path='filename', format='png'):
         """
