@@ -39,3 +39,13 @@ class InitDist:
             return super().__getattribute__('data')
 
         return super().__getattribute__(item)
+
+
+def normal_dist(loc=0, scale=1, size=100):
+    """
+    normal random variable
+    :return:
+    """
+    return ss.norm.rvs(size=size, loc=loc, scale=scale)
+
+
