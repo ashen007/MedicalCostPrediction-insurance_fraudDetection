@@ -44,6 +44,9 @@ class InitDist:
 def normal_dist(loc=0, scale=1, size=100):
     """
     normal random variable
+    :param loc:
+    :param scale:
+    :param size:
     :return:
     """
     return ss.norm.rvs(size=size, loc=loc, scale=scale)
@@ -74,6 +77,18 @@ def f_dist(shape=(1, 1), loc=0, scale=1, size=100):
     :return:
     """
     return ss.f.rvs(shape[0], shape[1], size=size, loc=loc, scale=scale)
+
+
+def t_dist(shape=1, loc=0, scale=1, size=100):
+    """
+    t random variable
+    :param shape:
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.t.rvs(shape, loc=loc, scale=scale, size=size)
 
 
 def gamma_dist(shape=1, loc=0, scale=1, size=100):
