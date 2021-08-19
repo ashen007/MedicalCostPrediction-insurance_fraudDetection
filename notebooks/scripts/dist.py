@@ -85,7 +85,7 @@ def exponential_dist(loc=0, scale=1, size=100):
 
 def chi_square_dist(shape=1, loc=0, scale=1, size=100):
     """
-    gamma random variable
+    chi square random variable
     :param shape:
     :param loc:
     :param scale:
@@ -97,7 +97,7 @@ def chi_square_dist(shape=1, loc=0, scale=1, size=100):
 
 def beta_dist(shape=(1, 1), loc=0, scale=1, size=100):
     """
-    gamma random variable
+    beta random variable
     :param shape:
     :param loc:
     :param scale:
@@ -105,3 +105,15 @@ def beta_dist(shape=(1, 1), loc=0, scale=1, size=100):
     :return:
     """
     return ss.beta.rvs(shape[0], shape[1], size=size, loc=loc, scale=scale)
+
+
+def log_normal_dist(shape=1, loc=0, scale=1, size=100):
+    """
+    log normal random variable
+    :param shape:
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.lognorm.rvs(shape, size=size, loc=loc, scale=scale)
