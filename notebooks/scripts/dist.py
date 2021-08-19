@@ -52,6 +52,18 @@ def normal_dist(loc=0, scale=1, size=100):
     return ss.norm.rvs(size=size, loc=loc, scale=scale)
 
 
+def power_norm_dist(shape=1, loc=0, scale=1, size=100):
+    """
+    normal random variable
+    :param shape:
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.powernorm.rvs(shape, size=size, loc=loc, scale=scale)
+
+
 def uniform_dist(loc=0, scale=1, size=100):
     """
     uniform random variable
