@@ -49,3 +49,12 @@ def normal_dist(loc=0, scale=1, size=100):
     return ss.norm.rvs(size=size, loc=loc, scale=scale)
 
 
+def uniform_dist(loc=0, scale=1, size=100):
+    """
+    uniform random variable
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.uniform.rvs(size=size, loc=loc, scale=scale)
