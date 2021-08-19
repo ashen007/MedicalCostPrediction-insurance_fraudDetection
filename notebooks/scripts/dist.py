@@ -60,6 +60,14 @@ def uniform_dist(loc=0, scale=1, size=100):
     return ss.uniform.rvs(size=size, loc=loc, scale=scale)
 
 
+def cauchy_dist(loc=0, scale=1, size=100):
+    """
+    cauchy random variable
+    :return:
+    """
+    return ss.cauchy.rvs(size=size, loc=loc, scale=scale)
+
+
 def gamma_dist(shape=1, loc=0, scale=1, size=100):
     """
     gamma random variable
