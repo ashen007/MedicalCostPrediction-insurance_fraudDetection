@@ -68,6 +68,14 @@ def cauchy_dist(loc=0, scale=1, size=100):
     return ss.cauchy.rvs(size=size, loc=loc, scale=scale)
 
 
+def f_dist(shape=(1, 1), loc=0, scale=1, size=100):
+    """
+    f random variable
+    :return:
+    """
+    return ss.f.rvs(shape[0], shape[1], size=size, loc=loc, scale=scale)
+
+
 def gamma_dist(shape=1, loc=0, scale=1, size=100):
     """
     gamma random variable
