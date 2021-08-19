@@ -58,3 +58,15 @@ def uniform_dist(loc=0, scale=1, size=100):
     :return:
     """
     return ss.uniform.rvs(size=size, loc=loc, scale=scale)
+
+
+def gamma_dist(shape=1, loc=0, scale=1, size=100):
+    """
+    gamma random variable
+    :param shape:
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.gamma.rvs(size=size, loc=loc, scale=scale, shape=shape)
