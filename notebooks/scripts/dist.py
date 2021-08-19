@@ -83,3 +83,13 @@ def exponential_dist(loc=0, scale=1, size=100):
     return ss.expon.rvs(loc=loc, scale=scale, size=size)
 
 
+def chi_square_dist(shape=1, loc=0, scale=1, size=100):
+    """
+    gamma random variable
+    :param shape:
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.chi2.rvs(size=size, loc=loc, scale=scale, shape=shape)
