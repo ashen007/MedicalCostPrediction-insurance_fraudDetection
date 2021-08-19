@@ -70,3 +70,16 @@ def gamma_dist(shape=1, loc=0, scale=1, size=100):
     :return:
     """
     return ss.gamma.rvs(size=size, loc=loc, scale=scale, shape=shape)
+
+
+def exponential_dist(loc=0, scale=1, size=100):
+    """
+    exponential random variable
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.expon.rvs(loc=loc, scale=scale, size=size)
+
+
