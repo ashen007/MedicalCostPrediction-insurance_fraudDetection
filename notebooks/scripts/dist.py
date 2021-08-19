@@ -128,4 +128,16 @@ def weibull_min_dist(shape=1, loc=0, scale=1, size=100):
     :param size:
     :return:
     """
-    return ss.lognorm.rvs(shape, size=size, loc=loc, scale=scale)
+    return ss.weibull_min.rvs(shape, size=size, loc=loc, scale=scale)
+
+
+def weibull_max_dist(shape=1, loc=0, scale=1, size=100):
+    """
+    weibull maximum random variable
+    :param shape:
+    :param loc:
+    :param scale:
+    :param size:
+    :return:
+    """
+    return ss.weibull_max.rvs(shape, size=size, loc=loc, scale=scale)
