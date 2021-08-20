@@ -78,7 +78,8 @@ class CompareDistribution:
         :return:
         """
         test_param = {}
-        test_dists = []
+        test_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
+                      'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
         test_stat = []
         percentiles_bins = np.linspace(0, 100, bins)
         thresholds = np.percentile(self.data[feature], percentiles_bins)
@@ -106,6 +107,35 @@ class CompareDistribution:
 
             return {'test_stat': test_stat,
                     'dist_param': test_param}
+
+    def anderson_darling_test(self, feature, test_dist='norm'):
+        """
+        test data distribution against normal, exponential, logistic,
+        or Gumbel (Extreme Value Type I) distributions.
+
+        H0 = The null hypothesis assumes no difference between the observed
+             and theoretical distribution
+        Ha = The alternative hypothesis assumes there is a difference between the observed
+             and theoretical distribution
+
+        :param feature:
+        :param test_dist:
+        :return:
+        """
+        if test_dist == 'norm':
+            return ss.anderson(self.data[feature], dist='norm')
+
+        elif test_dist == 'expon':
+            return ss.anderson(self.data[feature], dist='expon')
+
+        elif test_dist == 'logistic':
+            return ss.anderson(self.data[feature], dist='logistic')
+
+        elif test_dist == 'gumbel':
+            return ss.anderson(self.data[feature], dist='gumbel')
+
+        elif test_dist == 'gumbel_r':
+            return ss.anderson(self.data[feature], dist='gumbel_r')
 
 
 def normal_dist(loc=0, scale=1, size=100):
