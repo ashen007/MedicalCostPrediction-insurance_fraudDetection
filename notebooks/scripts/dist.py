@@ -64,11 +64,48 @@ class CompareDistribution:
         bins = np.linspace(0, 100, n)
 
         self._factory.render(size=self.fig, dpi=self.dpi)
-        sns.regplot(x=np.quantile(comp_dist, bins),
-                    y=np.quantile(self.data[feature]))
+        sns.regplot(x=np.percentile(comp_dist, bins),
+                    y=np.percentile(self.data[feature]))
         plt.xlabel('theoretical quartile')
         plt.ylabel('sample quartile')
         plt.show()
+
+    def chi_square_test(self, feature, bins=10):
+        """
+        calculate
+        :param feature:
+        :param bins:
+        :return:
+        """
+        test_param = {}
+        test_dists = []
+        test_stat = []
+        percentiles_bins = np.linspace(0, 100, bins)
+        thresholds = np.percentile(self.data[feature], percentiles_bins)
+        observe_frq, bins = (np.histogram(self.data[feature], thresholds))
+        cumulative_obs_frq = np.cumsum(observe_frq)
+
+        for dist in test_dists:
+            # Set up distribution and get fitted distribution parameters
+            std_dist = getattr(ss, dist)
+            param = std_dist.fit(self.data[feature])
+            test_param[dist] = param
+
+            # Get expected counts in percentile bins
+            # cdf of fitted sistrinution across bins
+            cdf_fitted = std_dist.cdf(thresholds, *param)
+            exp_frq = []
+
+            for bin in range(len(percentiles_bins) - 1):
+                expected_cdf_area = cdf_fitted[bin + 1] - cdf_fitted[bin]
+                exp_frq.append(expected_cdf_area)
+
+            exp_frq = np.asarray(exp_frq) * self.data.shape[0]
+            cumulative_exp_frq = np.cumsum(exp_frq)
+            test_stat.append(((cumulative_obs_frq - cumulative_exp_frq) ** 2) / cumulative_exp_frq)
+
+            return {'test_stat': test_stat,
+                    'dist_param': test_param}
 
 
 def normal_dist(loc=0, scale=1, size=100):

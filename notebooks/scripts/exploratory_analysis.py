@@ -946,8 +946,8 @@ class four_plots:
         self._factory.render(fig_size=fig_size, dpi=dpi)
 
         bins = np.linspace(0, 100, self.data.shape[0])
-        std_norm = np.quantile(np.random.standard_normal(self.data.shape[0]), bins)
-        input_data = np.quantile(self.data[feature], bins)
+        std_norm = np.percentile(np.random.standard_normal(self.data.shape[0]), bins)
+        input_data = np.percentile(self.data[feature], bins)
 
         sns.regplot(x=std_norm,
                     y=input_data,
@@ -977,8 +977,8 @@ class four_plots:
         axes = axes.ravel()
 
         bins = np.linspace(0, 100, self.data.shape[0])
-        std_norm = np.quantile(np.random.standard_normal(self.data.shape[0]), bins)
-        input_data = np.quantile(self.data[feature], bins)
+        std_norm = np.percentile(np.random.standard_normal(self.data.shape[0]), bins)
+        input_data = np.percentile(self.data[feature], bins)
 
         sns.lineplot(x=np.array(0, self.data[feature].shape[0], 1),
                      y=np.sin(self.data[feature]),
