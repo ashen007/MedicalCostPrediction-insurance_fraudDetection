@@ -166,6 +166,29 @@ class CompareDistribution:
         else:
             raise ValueError()
 
+    def kolmogorov_smirnov_test(self, feature, test_dist='norm'):
+        """
+        test data distribution against norm, powernorm, uniform, cauchy, f, t, gamma, expon,
+        chi2, beta, lognorm, powerlognorm, weibull_min, weibull_max distributions.
+
+        H0 = The null hypothesis assumes no difference between the observed
+             and theoretical distribution
+        Ha = The alternative hypothesis assumes there is a difference between the observed
+             and theoretical distribution
+
+        :param feature:
+        :param test_dist:
+        :return: KS test statistic, either D, D+ or D-
+        """
+        theoretical_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
+                             'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
+
+        if test_dist in theoretical_dists:
+            dist = getattr(ss, test_dist)
+            return ss.ks_1samp(self.data[feature], dist.cdf, alternative='two-sided’')
+        else:
+            raise ValueError()
+
     def wilk_Shapiro_normality_test(self, feature):
         """
         Perform the Shapiro-Wilk test for normality. The Shapiro-Wilk test tests the null hypothesis
