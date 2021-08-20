@@ -41,6 +41,36 @@ class InitDist:
         return super().__getattribute__(item)
 
 
+class CompareDistribution:
+    """
+    compare data with standard distributions
+    """
+
+    def __init__(self, factory=None, fig_size=(12, 6), dpi=300):
+        self._factory = factory
+        self.data = self._factory.__getattribute__('data')
+        self.fig = fig_size
+        self.dpi = dpi
+
+    def qq_compare(self, feature, comp_dist=None):
+        """
+        compare feature distribution with standards with QQ plot
+        :param feature:
+        :param comp_dist:
+        :return:
+        """
+        n = self.data[feature].shape[0]
+        comp_dist = comp_dist
+        bins = np.linspace(0, 100, n)
+
+        self._factory.render(size=self.fig, dpi=self.dpi)
+        sns.regplot(x=np.quantile(comp_dist, bins),
+                    y=np.quantile(self.data[feature]))
+        plt.xlabel('theoretical quartile')
+        plt.ylabel('sample quartile')
+        plt.show()
+
+
 def normal_dist(loc=0, scale=1, size=100):
     """
     normal random variable
