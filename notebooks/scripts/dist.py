@@ -137,6 +137,28 @@ class CompareDistribution:
         elif test_dist == 'gumbel_r':
             return ss.anderson(self.data[feature], dist='gumbel_r')
 
+    def ks_test(self, feature, test_dist='norm'):
+        """
+        test data distribution against norm, powernorm, uniform, cauchy, f, t, gamma, expon,
+        chi2, beta, lognorm, powerlognorm, weibull_min, weibull_max distributions.
+
+        H0 = The null hypothesis assumes no difference between the observed
+             and theoretical distribution
+        Ha = The alternative hypothesis assumes there is a difference between the observed
+             and theoretical distribution
+
+        :param feature:
+        :param test_dist:
+        :return:
+        """
+        theoretical_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
+                             'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
+
+        if test_dist in theoretical_dists:
+            return ss.kstest(self.data[feature], test_dist, alternative='two-sided’')
+        else:
+            raise ValueError()
+
 
 def normal_dist(loc=0, scale=1, size=100):
     """
