@@ -166,6 +166,21 @@ class CompareDistribution:
         else:
             raise ValueError()
 
+    def wilk_Shapiro_normality_test(self, feature):
+        """
+        Perform the Shapiro-Wilk test for normality. The Shapiro-Wilk test tests the null hypothesis
+        that the data was drawn from a normal distribution.
+
+        H0 = The null hypothesis assumes no difference between the observed
+             and theoretical normal distribution
+        Ha = The alternative hypothesis assumes there is a difference between the observed
+             and theoretical normal distribution
+
+        :param feature:
+        :return:
+        """
+        return ss.shapiro(self.data[feature])
+
 
 def normal_dist(loc=0, scale=1, size=100):
     """
