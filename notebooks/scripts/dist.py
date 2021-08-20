@@ -55,6 +55,7 @@ class CompareDistribution:
     def qq_compare(self, feature, comp_dist=None):
         """
         compare feature distribution with standards with QQ plot
+
         :param feature:
         :param comp_dist:
         :return:
@@ -72,7 +73,13 @@ class CompareDistribution:
 
     def chi_square_test(self, feature, bins=10):
         """
-        calculate
+        calculate goodness of fit using chi-squared test statistics.
+
+        H0 = The null hypothesis assumes no difference between the observed
+             and theoretical distribution
+        Ha = The alternative hypothesis assumes there is a difference between the observed
+             and theoretical distribution
+
         :param feature:
         :param bins:
         :return:
@@ -149,7 +156,7 @@ class CompareDistribution:
 
         :param feature:
         :param test_dist:
-        :return:
+        :return: KS test statistic, either D, D+ or D-
         """
         theoretical_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
                              'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
@@ -163,6 +170,7 @@ class CompareDistribution:
 def normal_dist(loc=0, scale=1, size=100):
     """
     normal random variable
+
     :param loc:
     :param scale:
     :param size:
@@ -174,6 +182,7 @@ def normal_dist(loc=0, scale=1, size=100):
 def power_norm_dist(shape=1, loc=0, scale=1, size=100):
     """
     normal random variable
+
     :param shape:
     :param loc:
     :param scale:
@@ -186,6 +195,7 @@ def power_norm_dist(shape=1, loc=0, scale=1, size=100):
 def uniform_dist(loc=0, scale=1, size=100):
     """
     uniform random variable
+
     :param loc:
     :param scale:
     :param size:
@@ -197,6 +207,7 @@ def uniform_dist(loc=0, scale=1, size=100):
 def cauchy_dist(loc=0, scale=1, size=100):
     """
     cauchy random variable
+
     :return:
     """
     return ss.cauchy.rvs(size=size, loc=loc, scale=scale)
@@ -205,6 +216,7 @@ def cauchy_dist(loc=0, scale=1, size=100):
 def f_dist(shape=(1, 1), loc=0, scale=1, size=100):
     """
     f random variable
+
     :return:
     """
     return ss.f.rvs(shape[0], shape[1], size=size, loc=loc, scale=scale)
@@ -213,6 +225,7 @@ def f_dist(shape=(1, 1), loc=0, scale=1, size=100):
 def t_dist(shape=1, loc=0, scale=1, size=100):
     """
     t random variable
+
     :param shape:
     :param loc:
     :param scale:
@@ -225,6 +238,7 @@ def t_dist(shape=1, loc=0, scale=1, size=100):
 def gamma_dist(shape=1, loc=0, scale=1, size=100):
     """
     gamma random variable
+
     :param shape:
     :param loc:
     :param scale:
@@ -237,6 +251,7 @@ def gamma_dist(shape=1, loc=0, scale=1, size=100):
 def exponential_dist(loc=0, scale=1, size=100):
     """
     exponential random variable
+
     :param loc:
     :param scale:
     :param size:
@@ -248,6 +263,7 @@ def exponential_dist(loc=0, scale=1, size=100):
 def chi_square_dist(shape=1, loc=0, scale=1, size=100):
     """
     chi square random variable
+
     :param shape:
     :param loc:
     :param scale:
@@ -260,6 +276,7 @@ def chi_square_dist(shape=1, loc=0, scale=1, size=100):
 def beta_dist(shape=(1, 1), loc=0, scale=1, size=100):
     """
     beta random variable
+
     :param shape:
     :param loc:
     :param scale:
@@ -272,6 +289,7 @@ def beta_dist(shape=(1, 1), loc=0, scale=1, size=100):
 def log_normal_dist(shape=1, loc=0, scale=1, size=100):
     """
     log normal random variable
+
     :param shape:
     :param loc:
     :param scale:
@@ -284,6 +302,7 @@ def log_normal_dist(shape=1, loc=0, scale=1, size=100):
 def power_log_norm_dist(shape=(1, 1), loc=0, scale=1, size=100):
     """
     log normal random variable
+
     :param shape:
     :param loc:
     :param scale:
@@ -296,6 +315,7 @@ def power_log_norm_dist(shape=(1, 1), loc=0, scale=1, size=100):
 def weibull_min_dist(shape=1, loc=0, scale=1, size=100):
     """
     weibull minimum random variable
+
     :param shape:
     :param loc:
     :param scale:
@@ -308,6 +328,7 @@ def weibull_min_dist(shape=1, loc=0, scale=1, size=100):
 def weibull_max_dist(shape=1, loc=0, scale=1, size=100):
     """
     weibull maximum random variable
+
     :param shape:
     :param loc:
     :param scale:
