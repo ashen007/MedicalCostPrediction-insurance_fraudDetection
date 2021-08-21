@@ -19,7 +19,8 @@ class Factory:
         super().__init__()
         self.data = dataframe
 
-    def render(self, size, dpi, subplots=False, sub_count=(1, 1)):
+    @staticmethod
+    def render(size, dpi, subplots=False, sub_count=(1, 1)):
         """
         create graphs
         :return:
@@ -612,7 +613,7 @@ class Relation:
 
         if (isinstance(x, list) or isinstance(y, list)) and not matrix:
             if isinstance(x, list):
-                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_count=sub_structure, subplots=True)
                 axes = axes.ravel()
 
                 for i in range(len(x)):
@@ -625,7 +626,7 @@ class Relation:
                 plt.show()
 
             elif isinstance(y, list):
-                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_count=sub_structure, subplots=True)
                 axes = axes.ravel()
 
                 for i in range(len(y)):
@@ -664,7 +665,7 @@ class Relation:
 
         if isinstance(x, list) and isinstance(y, list) and not matrix:
             if len(x) == len(y):
-                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_count=sub_structure, subplots=True)
                 axes = axes.ravel()
 
                 for i in range(len(x)):
@@ -717,7 +718,7 @@ class Relation:
 
         if (isinstance(x, list) or isinstance(y, list)) and not matrix:
             if isinstance(x, list):
-                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_count=sub_structure, subplots=True)
                 axes = axes.ravel()
 
                 for i in range(len(x)):
@@ -730,7 +731,7 @@ class Relation:
                 plt.show()
 
             elif isinstance(y, list):
-                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_count=sub_structure, subplots=True)
                 axes = axes.ravel()
 
                 for i in range(len(y)):
@@ -771,7 +772,7 @@ class Relation:
 
         if isinstance(x, list) and isinstance(y, list) and not matrix:
             if len(x) == len(y):
-                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_structure=sub_structure, subplots=True)
+                fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_count=sub_structure, subplots=True)
                 axes = axes.ravel()
 
                 for i in range(len(x)):
@@ -825,7 +826,7 @@ class Relation:
             raise ValueError('x and y must be column names.')
 
 
-class four_plots:
+class FourPlots:
     """
     create 4-plot to check assumptions
     """
@@ -848,8 +849,8 @@ class four_plots:
         :param format:
         :return:
         """
-        self._factory.render(fig_size=fig_size, dpi=dpi)
-        sns.lineplot(x=np.array(0, self.data[feature].shape[0], 1),
+        self._factory.render(size=fig_size, dpi=dpi)
+        sns.lineplot(x=np.array(range(0, self.data[feature].shape[0], 1)),
                      y=np.sin(self.data[feature]),
                      color=color, palette=palette)
 
@@ -872,7 +873,7 @@ class four_plots:
         :param format:
         :return:
         """
-        self._factory.render(fig_size=fig_size, dpi=dpi)
+        self._factory.render(size=fig_size, dpi=dpi)
         pd.plotting.autocorrelation_plot(self.data[feature],
                                          color=color)
 
@@ -896,7 +897,7 @@ class four_plots:
         :param format:
         :return:
         """
-        self._factory.render(fig_size=fig_size, dpi=dpi)
+        self._factory.render(size=fig_size, dpi=dpi)
         sns.scatterplot(x=self.data[feature],
                         y=self.data[feature].shift(lag),
                         color=color, palette=palette)
@@ -920,7 +921,7 @@ class four_plots:
         :param format:
         :return:
         """
-        self._factory.render(fig_size=fig_size, dpi=dpi)
+        self._factory.render(size=fig_size, dpi=dpi)
         sns.histplot(x=self.data[feature],
                      color=color, palette=palette)
 
@@ -943,7 +944,7 @@ class four_plots:
         :param format:
         :return:
         """
-        self._factory.render(fig_size=fig_size, dpi=dpi)
+        self._factory.render(size=fig_size, dpi=dpi)
 
         bins = np.linspace(0, 100, self.data.shape[0])
         std_norm = np.percentile(np.random.standard_normal(self.data.shape[0]), bins)
@@ -951,7 +952,7 @@ class four_plots:
 
         sns.regplot(x=std_norm,
                     y=input_data,
-                    color=color, palette=palette)
+                    color=color)
 
         if save:
             plt.savefig(path, format=format)
@@ -973,14 +974,14 @@ class four_plots:
         :param format:
         :return:
         """
-        fig, axes = self._factory.render(fig_size=fig_size, dpi=dpi, sub_structure=[2, 2], subplots=True)
+        fig, axes = self._factory.render(size=fig_size, dpi=dpi, sub_count=[2, 2], subplots=True)
         axes = axes.ravel()
 
         bins = np.linspace(0, 100, self.data.shape[0])
         std_norm = np.percentile(np.random.standard_normal(self.data.shape[0]), bins)
         input_data = np.percentile(self.data[feature], bins)
 
-        sns.lineplot(x=np.array(0, self.data[feature].shape[0], 1),
+        sns.lineplot(x=np.array(range(0, self.data[feature].shape[0], 1)),
                      y=np.sin(self.data[feature]),
                      color=color, palette=palette,
                      ax=axes[0])
@@ -993,7 +994,7 @@ class four_plots:
                      ax=axes[2])
         sns.regplot(x=std_norm,
                     y=input_data,
-                    color=color, palette=palette,
+                    color=color,
                     ax=axes[3])
 
         if save:
