@@ -87,7 +87,7 @@ class CompareDistribution:
         test_param = {}
         test_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
                       'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
-        test_stat = []
+        test_stat = {}
         percentiles_bins = np.linspace(0, 100, bins)
         thresholds = np.percentile(self.data[feature], percentiles_bins)
         observe_frq, bins = (np.histogram(self.data[feature], thresholds))
@@ -110,10 +110,10 @@ class CompareDistribution:
 
             exp_frq = np.asarray(exp_frq) * self.data.shape[0]
             cumulative_exp_frq = np.cumsum(exp_frq)
-            test_stat.append(((cumulative_obs_frq - cumulative_exp_frq) ** 2) / cumulative_exp_frq)
+            test_stat[dist] = sum(((cumulative_obs_frq - cumulative_exp_frq) ** 2) / cumulative_exp_frq)
 
-            return {'test_stat': test_stat,
-                    'dist_param': test_param}
+        return {'test_stat': test_stat,
+                'dist_param': test_param}
 
     def anderson_darling_test(self, feature, test_dist='norm'):
         """
