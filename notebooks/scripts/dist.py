@@ -144,7 +144,7 @@ class CompareDistribution:
         elif test_dist == 'gumbel_r':
             return ss.anderson(self.data[feature], dist='gumbel_r')
 
-    def ks_test(self, feature, test_dist='norm'):
+    def ks_test(self, feature, bins=10):
         """
         test data distribution against norm, powernorm, uniform, cauchy, f, t, gamma, expon,
         chi2, beta, lognorm, powerlognorm, weibull_min, weibull_max distributions.
@@ -158,13 +158,26 @@ class CompareDistribution:
         :param test_dist:
         :return: KS test statistic, either D, D+ or D-
         """
-        theoretical_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
-                             'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
+        test_param = {}
+        test_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
+                      'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
+        test_stat = {}
+        percentiles_bins = np.linspace(0, 100, bins)
+        thresholds = np.percentile(self.data[feature], percentiles_bins)
 
-        if test_dist in theoretical_dists:
-            return ss.kstest(self.data[feature], test_dist, alternative='two-sided’')
-        else:
-            raise ValueError()
+        for dist in test_dists:
+            # Set up distribution and get fitted distribution parameters
+            std_dist = getattr(ss, dist)
+            param = std_dist.fit(self.data[feature])
+            test_param[dist] = param
+
+            # Get expected counts in percentile bins
+            # cdf of fitted sistrinution across bins
+            cdf_fitted = std_dist.cdf(thresholds, *param)
+            results = ss.kstest(self.data[feature], cdf_fitted, alternative='two-sided')
+            test_stat[dist] = results
+
+        return test_stat
 
     def kolmogorov_smirnov_test(self, feature, test_dist='norm'):
         """
@@ -180,14 +193,26 @@ class CompareDistribution:
         :param test_dist:
         :return: KS test statistic, either D, D+ or D-
         """
-        theoretical_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
-                             'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
+        test_param = {}
+        test_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
+                      'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
+        test_stat = {}
+        percentiles_bins = np.linspace(0, 100, bins)
+        thresholds = np.percentile(self.data[feature], percentiles_bins)
 
-        if test_dist in theoretical_dists:
-            dist = getattr(ss, test_dist)
-            return ss.ks_1samp(self.data[feature], dist.cdf, alternative='two-sided’')
-        else:
-            raise ValueError()
+        for dist in test_dists:
+            # Set up distribution and get fitted distribution parameters
+            std_dist = getattr(ss, dist)
+            param = std_dist.fit(self.data[feature])
+            test_param[dist] = param
+
+            # Get expected counts in percentile bins
+            # cdf of fitted sistrinution across bins
+            cdf_fitted = std_dist.cdf(thresholds, *param)
+            results = ss.ks_1samp(self.data[feature], cdf_fitted, alternative='two-sided')
+            test_stat[dist] = results
+
+        return test_stat
 
     def wilk_Shapiro_normality_test(self, feature):
         """
