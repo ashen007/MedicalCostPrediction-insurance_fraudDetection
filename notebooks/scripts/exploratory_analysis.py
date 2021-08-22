@@ -323,10 +323,11 @@ class distribution:
              fig_size=(12, 6), dpi=300, color=None, palette=None,
              sub_plots=False, sub_structure=(1, 1),
              bins='auto', stat='count',
-             cumulative=False, kde=False,
+             cumulative=False, kde=False, discrete=False,
              save=False, path='filename', format='png'):
         """
         histogram
+        :param discrete:
         :param palette:
         :param color:
         :param hue:
@@ -350,7 +351,7 @@ class distribution:
                 self._factory.render(size=fig_size, dpi=dpi)
                 sns.histplot(data=self.data, x=feature, hue=hue,
                              bins=bins, stat=stat,
-                             cumulative=cumulative, kde=kde,
+                             cumulative=cumulative, kde=kde, discrete=discrete,
                              color=color, palette=palette)
                 if save:
                     plt.savefig(path, format=format)
@@ -362,10 +363,10 @@ class distribution:
                 fig, axes = self._factory.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
                 axes = axes.ravel()
 
-                for i in range(axes):
+                for i in range(len(axes)):
                     sns.histplot(data=self.data, x=feature[i], hue=hue,
                                  bins=bins, stat=stat,
-                                 cumulative=cumulative, kde=kde,
+                                 cumulative=cumulative, kde=kde, discrete=discrete,
                                  color=color, palette=palette,
                                  ax=axes[i])
 
@@ -424,7 +425,7 @@ class distribution:
                 fig, axes = self._factory.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
                 axes = axes.ravel()
 
-                for i in range(axes):
+                for i in range(len(axes)):
                     sns.kdeplot(data=self.data, x=sub_cols[i], hue=hue,
                                 fill=fill, multiple=multiple,
                                 bw_adjust=bw_adjust, bw_method=bw_method,
@@ -474,7 +475,7 @@ class distribution:
                 fig, axes = self._factory.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
                 axes = axes.ravel()
 
-                for i in range(axes):
+                for i in range(len(axes)):
                     sns.boxplot(data=self.data, x=sub_cols[i], hue=hue,
                                 color=color, palette=palette, ax=axes[i])
 
@@ -532,7 +533,7 @@ class distribution:
                 fig, axes = self._factory.render(size=fig_size, dpi=dpi, subplots=sub_plots, sub_count=sub_structure)
                 axes = axes.ravel()
 
-                for i in range(axes):
+                for i in range(len(axes)):
                     sns.violinplot(data=self.data, x=sub_cols[i], hue=hue,
                                    split=split,
                                    scale=scale,
