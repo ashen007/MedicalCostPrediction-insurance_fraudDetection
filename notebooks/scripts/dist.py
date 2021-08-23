@@ -15,13 +15,15 @@ class InitDist:
         super().__init__()
         self.data = dataframe
 
+    @staticmethod
     def render(self, size, dpi, subplots=False, sub_count=(1, 1)):
         """
         create graphs
         :return:
         """
         if not subplots:
-            return plt.Figure(figsize=size, dpi=dpi)
+            fig = plt.Figure(figsize=size, dpi=dpi)
+            return fig
         else:
             fig, axes = plt.subplots(nrows=sub_count[0],
                                      ncols=sub_count[1],
@@ -52,21 +54,25 @@ class CompareDistribution:
         self.fig = fig_size
         self.dpi = dpi
 
-    def qq_compare(self, feature, comp_dist=None):
+    def qq_compare(self, feature, a=None, b=None, scale=1, loc=0, comp_dist=None):
         """
         compare feature distribution with standards with QQ plot
 
+        :param loc:
+        :param scale:
+        :param b:
+        :param a:
         :param feature:
         :param comp_dist:
         :return:
         """
         n = self.data[feature].shape[0]
-        comp_dist = comp_dist
+        comp_dist = getattr(ss, comp_dist).rvs(loc=loc, scale=scale, size=n)
         bins = np.linspace(0, 100, n)
 
         self._factory.render(size=self.fig, dpi=self.dpi)
         sns.regplot(x=np.percentile(comp_dist, bins),
-                    y=np.percentile(self.data[feature]))
+                    y=np.percentile(self.data[feature], bins))
         plt.xlabel('theoretical quartile')
         plt.ylabel('sample quartile')
         plt.show()
@@ -87,7 +93,7 @@ class CompareDistribution:
         test_param = {}
         test_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
                       'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
-        test_stat = []
+        test_stat = {}
         percentiles_bins = np.linspace(0, 100, bins)
         thresholds = np.percentile(self.data[feature], percentiles_bins)
         observe_frq, bins = (np.histogram(self.data[feature], thresholds))
@@ -110,10 +116,10 @@ class CompareDistribution:
 
             exp_frq = np.asarray(exp_frq) * self.data.shape[0]
             cumulative_exp_frq = np.cumsum(exp_frq)
-            test_stat.append(((cumulative_obs_frq - cumulative_exp_frq) ** 2) / cumulative_exp_frq)
+            test_stat[dist] = sum(((cumulative_obs_frq - cumulative_exp_frq) ** 2) / cumulative_exp_frq)
 
-            return {'test_stat': test_stat,
-                    'dist_param': test_param}
+        return {'test_stat': test_stat,
+                'dist_param': test_param}
 
     def anderson_darling_test(self, feature, test_dist='norm'):
         """
@@ -144,7 +150,7 @@ class CompareDistribution:
         elif test_dist == 'gumbel_r':
             return ss.anderson(self.data[feature], dist='gumbel_r')
 
-    def ks_test(self, feature, test_dist='norm'):
+    def ks_test(self, feature, bins=10):
         """
         test data distribution against norm, powernorm, uniform, cauchy, f, t, gamma, expon,
         chi2, beta, lognorm, powerlognorm, weibull_min, weibull_max distributions.
@@ -158,13 +164,26 @@ class CompareDistribution:
         :param test_dist:
         :return: KS test statistic, either D, D+ or D-
         """
-        theoretical_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
-                             'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
+        test_param = {}
+        test_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
+                      'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
+        test_stat = {}
+        percentiles_bins = np.linspace(0, 100, bins)
+        thresholds = np.percentile(self.data[feature], percentiles_bins)
 
-        if test_dist in theoretical_dists:
-            return ss.kstest(self.data[feature], test_dist, alternative='two-sided’')
-        else:
-            raise ValueError()
+        for dist in test_dists:
+            # Set up distribution and get fitted distribution parameters
+            std_dist = getattr(ss, dist)
+            param = std_dist.fit(self.data[feature])
+            test_param[dist] = param
+
+            # Get expected counts in percentile bins
+            # cdf of fitted sistrinution across bins
+            cdf_fitted = std_dist.cdf(thresholds, *param)
+            results = ss.kstest(self.data[feature], cdf_fitted, alternative='two-sided')
+            test_stat[dist] = results
+
+        return test_stat
 
     def kolmogorov_smirnov_test(self, feature, test_dist='norm'):
         """
@@ -180,14 +199,26 @@ class CompareDistribution:
         :param test_dist:
         :return: KS test statistic, either D, D+ or D-
         """
-        theoretical_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
-                             'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
+        test_param = {}
+        test_dists = ['norm', 'powernorm', 'uniform', 'cauchy', 'f', 't', 'gamma', 'expon',
+                      'chi2', 'beta', 'lognorm', 'powerlognorm', 'weibull_min', 'weibull_max']
+        test_stat = {}
+        percentiles_bins = np.linspace(0, 100, bins)
+        thresholds = np.percentile(self.data[feature], percentiles_bins)
 
-        if test_dist in theoretical_dists:
-            dist = getattr(ss, test_dist)
-            return ss.ks_1samp(self.data[feature], dist.cdf, alternative='two-sided’')
-        else:
-            raise ValueError()
+        for dist in test_dists:
+            # Set up distribution and get fitted distribution parameters
+            std_dist = getattr(ss, dist)
+            param = std_dist.fit(self.data[feature])
+            test_param[dist] = param
+
+            # Get expected counts in percentile bins
+            # cdf of fitted sistrinution across bins
+            cdf_fitted = std_dist.cdf(thresholds, *param)
+            results = ss.ks_1samp(self.data[feature], cdf_fitted, alternative='two-sided')
+            test_stat[dist] = results
+
+        return test_stat
 
     def wilk_Shapiro_normality_test(self, feature):
         """
