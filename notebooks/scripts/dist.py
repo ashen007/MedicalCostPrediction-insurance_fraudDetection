@@ -52,21 +52,25 @@ class CompareDistribution:
         self.fig = fig_size
         self.dpi = dpi
 
-    def qq_compare(self, feature, comp_dist=None):
+    def qq_compare(self, feature, a=None, b=None, scale=1, loc=0, comp_dist=None):
         """
         compare feature distribution with standards with QQ plot
 
+        :param loc:
+        :param scale:
+        :param b:
+        :param a:
         :param feature:
         :param comp_dist:
         :return:
         """
         n = self.data[feature].shape[0]
-        comp_dist = comp_dist
+        comp_dist = getattr(ss, comp_dist).rvs(loc=loc, scale=scale, size=n)
         bins = np.linspace(0, 100, n)
 
         self._factory.render(size=self.fig, dpi=self.dpi)
         sns.regplot(x=np.percentile(comp_dist, bins),
-                    y=np.percentile(self.data[feature]))
+                    y=np.percentile(self.data[feature], bins))
         plt.xlabel('theoretical quartile')
         plt.ylabel('sample quartile')
         plt.show()
