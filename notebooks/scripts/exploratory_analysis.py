@@ -26,7 +26,8 @@ class Factory:
         :return:
         """
         if not subplots:
-            return plt.Figure(figsize=size, dpi=dpi)
+            fig = plt.Figure(figsize=size, dpi=dpi)
+            return fig
         else:
             fig, axes = plt.subplots(nrows=sub_count[0],
                                      ncols=sub_count[1],
@@ -709,7 +710,7 @@ class Relation:
         """
         if isinstance(x, str) and isinstance(y, str) and not matrix:
             self._factory.render(size=fig_size, dpi=dpi)
-            sns.kdeplot(x=x, y=y, hue=hue, fill=fill,
+            sns.kdeplot(x=x, y=y, hue=hue, data=self.data, fill=fill,
                         color=color, palette=palette)
 
             if save:
@@ -815,7 +816,7 @@ class Relation:
 
         if isinstance(x, str) and isinstance(y, str):
             self._factory.render(size=fig_size, dpi=dpi)
-            sns.jointplot(data=self.data, x=x, y=y, hue=hue,
+            sns.jointplot(data=self.data, x=x, y=y, hue=hue, kind='hex',
                           height=height, color=color, palette=palette)
 
             if save:

@@ -15,13 +15,15 @@ class InitDist:
         super().__init__()
         self.data = dataframe
 
+    @staticmethod
     def render(self, size, dpi, subplots=False, sub_count=(1, 1)):
         """
         create graphs
         :return:
         """
         if not subplots:
-            return plt.Figure(figsize=size, dpi=dpi)
+            fig = plt.Figure(figsize=size, dpi=dpi)
+            return fig
         else:
             fig, axes = plt.subplots(nrows=sub_count[0],
                                      ncols=sub_count[1],
