@@ -238,7 +238,7 @@ model.
 
 - linear models - ordinary least square, lasso (L1), ridge (L2), elastic net, ransac, huber
 
-![](demo/Model%20Creation/compare real_regularization_robust.png)
+![](demo/Model%20Creation/compare%20real_regularization_robust.png)
 
 <table>
 <tbody>
@@ -282,7 +282,7 @@ model.
 
 - non-linear models - polynomial ridge, k nearest neighbors, decision tree
 
-![](demo/Model%20Creation/the best tree compare the best knn.png)
+![](demo/Model%20Creation/the%20best%20tree%20compare%20the%20best%20knn.png)
 ![](demo/Model%20Creation/compare%20degree%20of%20polynomial%20function.png)
 
 <table>
