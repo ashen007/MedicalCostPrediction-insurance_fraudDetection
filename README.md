@@ -12,7 +12,8 @@ before apply any modeling algorithm or before do any changes to data examine bas
   If the fixed location assumption holds, then the run sequence plot will be flat and non-drifting.
 
 - **Fixed Variation:**
-  If the fixed variation assumption holds, then the vertical spread in the run sequence plot will be approximately the same over the entire horizontal axis.
+  If the fixed variation assumption holds, then the vertical spread in the run sequence plot will be approximately the
+  same over the entire horizontal axis.
 
 - **Randomness:**
   If the randomness assumption holds, then the lag plot will be structureless and random.
@@ -21,16 +22,17 @@ before apply any modeling algorithm or before do any changes to data examine bas
   If the fixed distribution assumption holds, in particular if the fixed normal distribution holds, then the histogram
   will be bell-shaped, and the normal probability plot will be linear.
 
-![4-plot example](demo/EDA/charges_4plot.png)
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/charges_4plot.png" alt="4-plot example">
 
-after prove data fulfill underlying assumption then exploratory data analysis can be begun. first summery about
-location statistics and variability of data then distribution and correlation statistics are calculated. four estimators
-used to estimate mean(not robust), trimmed mean, winzorized mean and median. winsorized mean has the lowest 
-standard error among three mean estimators. median is lower than mean in every feature that is a hint on right skewed
-distribution.
+after prove data fulfill underlying assumption then exploratory data analysis can be begun. first summery about location
+statistics and variability of data then distribution and correlation statistics are calculated. four estimators used to
+estimate mean(not robust), trimmed mean, winzorized mean and median. winsorized mean has the lowest standard error among
+three mean estimators. median is lower than mean in every feature that is a hint on right skewed distribution.
 
-![central tendency estimators](demo/EDA/central tendancy.jpg)
-![standard error of estimator](demo/EDA/std error of central tendancy.jpg)
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/central tendancy.jpg"
+alt="central tendency estimators" hspace="20">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/std error of central tendancy.jpg"
+alt="standard error of estimator" hspace="20">
 
 ## Dataset
 
