@@ -31,15 +31,16 @@ statistics and variability of data then distribution and correlation statistics 
 estimate mean(not robust), trimmed mean, winzorized mean and median. winsorized mean has the lowest standard error among
 three mean estimators. median is lower than mean in every feature that is a hint on right skewed distribution.
 
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/central tendancy.jpg" alt="central tendency estimators" width="400px">
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/std error of central tendancy.jpg" alt="standard error of estimator" width="400px">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/central tendancy.jpg" alt="central tendency estimators" width="400px"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/std error of central tendancy.jpg" alt="standard error of estimator" width="400px">
 
 ***distribution analysis***
 
 chi-squared goodness of fit test done on every discrete and continuess feature to estimate best distribution to match
 with data.
 
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/continues_hist.png" alt="distribution (histogram)"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/kde.png" alt="distribution (histogram)">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/continues_hist.png" alt="
+distribution (histogram) width="
+400px"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/kde.png" alt="distribution (histogram)" width="400px">
 
 theoretical distributions with underline distribution of data :
 
