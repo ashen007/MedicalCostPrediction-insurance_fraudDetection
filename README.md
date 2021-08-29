@@ -224,9 +224,9 @@ three methods used to standardized features which are -
 
 scaling done by robust scaling method because there are outliers in data.
 
-![](demo/Model Creation/age_box_cox.png)
-![](demo/Model Creation/bmi_yj_trans.png)
-![](demo/Model Creation/charges_power_(yj)_trans.png)
+![](demo/Model%20Creation/age_box_cox.png)
+![](demo/Model%20Creation/bmi_yj_trans.png)
+![](demo/Model%20Creation/charges_power_(yj)_trans.png)
 
 ## models
 
@@ -238,7 +238,7 @@ model.
 
 - linear models - ordinary least square, lasso (L1), ridge (L2), elastic net, ransac, huber
 
-![](demo/Model Creation/compare real_regularization_robust.png)
+![](demo/Model%20Creation/compare real_regularization_robust.png)
 
 <table>
 <tbody>
@@ -282,8 +282,8 @@ model.
 
 - non-linear models - polynomial ridge, k nearest neighbors, decision tree
 
-![](demo/Model Creation/the best tree compare the best knn.png)
-![](demo/Model Creation/compare%20degree%20of%20polynomial%20function.png)
+![](demo/Model%20Creation/the best tree compare the best knn.png)
+![](demo/Model%20Creation/compare%20degree%20of%20polynomial%20function.png)
 
 <table>
 <tbody>
@@ -312,7 +312,7 @@ model.
 
 - ensemble model - bagging, random forest, adaptive boost, stacking
 
-![](demo/Model Creation/ensemble%20models%20performance.png)
+![](demo/Model%20Creation/ensemble%20models%20performance.png)
 
 <table>
 <tbody>
