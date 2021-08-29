@@ -38,9 +38,7 @@ three mean estimators. median is lower than mean in every feature that is a hint
 chi-squared goodness of fit test done on every discrete and continuess feature to estimate best distribution to match
 with data.
 
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/continues_hist.png" alt="
-distribution (histogram) width="
-400px"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/kde.png" alt="distribution (histogram)" width="400px">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/continues_hist.png" alt="distribution (histogram) width="400px"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/kde.png" alt="distribution (histogram)" width="400px">
 
 theoretical distributions with underline distribution of data :
 
