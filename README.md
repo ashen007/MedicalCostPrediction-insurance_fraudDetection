@@ -30,9 +30,9 @@ estimate mean(not robust), trimmed mean, winzorized mean and median. winsorized 
 three mean estimators. median is lower than mean in every feature that is a hint on right skewed distribution.
 
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/central tendancy.jpg"
-alt="central tendency estimators" hspace="20">
+alt="central tendency estimators" width="400px">
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/std error of central tendancy.jpg"
-alt="standard error of estimator" hspace="20">
+alt="standard error of estimator" width="400px">
 
 ## Dataset
 
