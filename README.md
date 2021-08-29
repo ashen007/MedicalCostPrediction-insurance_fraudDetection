@@ -45,11 +45,128 @@ theoretical distributions with underline distribution of data :
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/age_comp_plot.png" width="400px" alt="distribution (histogram)"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/bmi_comp_plot.png" width="400px" alt="distribution (histogram)">
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/charges_comp_plot.png" width="400px" alt="distribution (histogram)">
 
-estimated distribution based on chi-squared test data :
+estimated distribution based on **_chi-squared_** test data :
 
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/age_dist_score.png" width="400px" alt="estimated distribution"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/age_estimate_dist.png" width="400px" alt="estimated distribution">
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/bmi_dist_score.png" width="400px" alt="estimated distribution"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/bmi_estimate_dist.png" width="400px" alt="estimated distribution">
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/charges_dist_score.png" width="400px" alt="estimated distribution"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/charges_estimate_dist.png" width="400px" alt="estimated distribution">
+
+***normality test***
+
+three types of testing methods used to test normalirity of distribution. qq-plots and anderson darling, wilk Shapiro.
+
+- **H0** = The null hypothesis assumes no difference between the observed and theoretical distribution
+- **Ha** = The alternative hypothesis assumes there is a difference between the observed and theoretical distribution
+
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/age_norm_test.jpg" width="400px" alt="qq plot"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/bmi_norm_test.jpg" width="400px" alt="qq plot">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/children_norm_test.jpg" width="400px" alt="qq plot"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/charges_norm_test.jpg" width="400px" alt="qq plot">
+
+<table>
+    <tbody>
+        <tr>
+            <td style="background-color: darkgray; text-align: center;" colspan="4">
+                <h4>anderson darling test results</h4>
+            </td>
+        </tr>
+        <tr>
+            <td><h4>feature</h4></td>
+            <td><h4>statics</h4></td>
+            <td><h4>significant level</h4></td>
+            <td><h4>critical value</h4></td>
+        </tr>
+        <tr>
+            <td rowspan="5">age</td>
+            <td rowspan="5">18.7887</td>
+            <td>0.574</td>
+            <td>15</td>
+        </tr>
+        <tr>
+            <td>0.654</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>0.785</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>0.915</td>
+            <td>2.5</td>
+        </tr>
+        <tr>
+            <td>1.089</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td rowspan="5">bmi</td>
+            <td rowspan="5">1.2355</td>
+            <td>0.574</td>
+            <td>15</td>
+        </tr>
+        </tr>
+        <tr>
+            <td>0.654</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>0.785</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>0.915</td>
+            <td>2.5</td>
+        </tr>
+        <tr>
+            <td>1.089</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td rowspan="5">children</td>
+            <td rowspan="5">87.6711</td>
+            <td>0.574</td>
+            <td>15</td>
+        </tr>
+        </tr>
+        <tr>
+            <td>0.654</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>0.785</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>0.915</td>
+            <td>2.5</td>
+        </tr>
+        <tr>
+            <td>1.089</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td rowspan="5">charges</td>
+            <td rowspan="5">85.1285</td>
+            <td>0.574</td>
+            <td>15</td>
+        </tr>
+        </tr>
+        <tr>
+            <td>0.654</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>0.785</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>0.915</td>
+            <td>2.5</td>
+        </tr>
+        <tr>
+            <td>1.089</td>
+            <td>1</td>
+        </tr>
+    </tbody>
+</table>
 
 ## Dataset
 
