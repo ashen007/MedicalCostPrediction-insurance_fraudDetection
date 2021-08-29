@@ -58,8 +58,8 @@ three types of testing methods used to test normalirity of distribution. qq-plot
 - **H0** = The null hypothesis assumes no difference between the observed and theoretical distribution
 - **Ha** = The alternative hypothesis assumes there is a difference between the observed and theoretical distribution
 
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/age_norm_test.jpg" width="400px" alt="qq plot"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/bmi_norm_test.jpg" width="400px" alt="qq plot">
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/children_norm_test.jpg" width="400px" alt="qq plot"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/charges_norm_test.jpg" width="400px" alt="qq plot">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/doc/demo/EDA/age_norm_test.jpg" width="400px" alt="qq plot"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/doc/demo/EDA/bmi_norm_test.jpg" width="400px" alt="qq plot">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/doc/demo/EDA/children_norm_test.jpg" width="400px" alt="qq plot"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/doc/demo/EDA/charges_norm_test.jpg" width="400px" alt="qq plot">
 
 <table>
     <tbody>
@@ -214,9 +214,137 @@ box plots used to identify outliers in the data.
 
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/doc/demo/EDA/boxplot.png" alt="outliers">
 
+## feature standardization, transformation and selection
+
+three methods used to standardized features which are -
+
+- quantile transformation
+- box-cox transformation
+- yoe-Johnson transformation
+
+scaling done by robust scaling method because there are outliers in data.
+
+![](demo/Model Creation/age_box_cox.png)
+![](demo/Model Creation/bmi_yj_trans.png)
+![](demo/Model Creation/charges_power_(yj)_trans.png)
+
+## models
+
+coefficient of determination or R2, It measures the amount of variance of the prediction which is explained by the
+dataset. R2 values close to 1 mean an almost-perfect regression, while values close to 0 (or negative) imply a bad
+model.
+
+![](demo/Model%20Creation/all%20models%20evaluation.png)
+
+- linear models - ordinary least square, lasso (L1), ridge (L2), elastic net, ransac, huber
+
+![](demo/Model Creation/compare real_regularization_robust.png)
+
+<table>
+<tbody>
+<tr style="background-color: darkgray; text-align: center;">
+<td><h4>model</h4></td>
+<td><h4>score in train data</h4></td>
+<td><h4>score in test data</h4></td>
+</tr>
+<tr>
+<td>ols</td>
+<td>0.761332</td>
+<td>0.791844</td>
+</tr>
+<tr>
+<td>lasso</td>
+<td>0.362672</td>
+<td>0.362733</td>
+</tr>
+<tr>
+<td>ridge</td>
+<td>0.761330</td>
+<td>0.791807</td>
+</tr>
+<tr>
+<td>elasticnet</td>
+<td>0.559900</td>
+<td>0.569312</td>
+</tr>
+<tr>
+<td>ransac</td>
+<td>0.595668</td>
+<td>0.623618</td>
+</tr>
+<tr>
+<td>huber</td>
+<td>0.754969</td>
+<td>0.788107</td>
+</tr>
+</tbody>
+</table>
+
+- non-linear models - polynomial ridge, k nearest neighbors, decision tree
+
+![](demo/Model Creation/the best tree compare the best knn.png)
+![](demo/Model Creation/compare%20degree%20of%20polynomial%20function.png)
+
+<table>
+<tbody>
+<tr style="background-color: darkgray; text-align: center;">
+<td><h4>model</h4></td>
+<td><h4>score in train data</h4></td>
+<td><h4>score in test data</h4></td>
+</tr>
+<tr>
+<td>ridge poly</td>
+<td>0.829277</td>
+<td>0.856282</td>
+</tr>
+<tr>
+<td>knn</td>
+<td>0.822168</td>
+<td>0.840297</td>
+</tr>
+<tr>
+<td>tree</td>
+<td>0.842030</td>
+<td>0.851783</td>
+</tr>
+</tbody>
+</table>
+
+- ensemble model - bagging, random forest, adaptive boost, stacking
+
+![](demo/Model Creation/ensemble%20models%20performance.png)
+
+<table>
+<tbody>
+<tr style="background-color: darkgray; text-align: center;">
+<td><h4>model</h4></td>
+<td><h4>score in train data</h4></td>
+<td><h4>score in test data</h4></td>
+</tr>
+<tr>
+<td>bagging</td>
+<td>0.843557</td>
+<td>0.852594</td>
+</tr>
+<tr>
+<td>adaboost</td>
+<td>0.759680</td>
+<td>0.791620</td>
+</tr>
+<tr>
+<td>random forest</td>
+<td>0.838272</td>
+<td>0.854912</td>
+</tr>
+<tr>
+<td>stacking</td>
+<td>0.831071</td>
+<td>0.851779</td>
+</tr>
+</tbody>
+</table>
+
 ## Dataset
 
 dataset use in here is medical cost prediction dataset from **kaggle**. you can find it
 from <a href="https://www.kaggle.com/mirichoi0218/insurance">here</a>.
-
-## models
