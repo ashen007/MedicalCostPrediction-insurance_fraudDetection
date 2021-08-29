@@ -45,18 +45,18 @@ with data.
 
 theoretical distributions with underline distribution of data :
 
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/age_comp_plot.png" width="400px" alt="distribution (histogram)">
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/bmi_comp_plot.png" width="400px" alt="distribution (histogram)">
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/charges_comp_plot.png" width="400px" alt="distribution (histogram)">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/age_comp_plot.png" width="400px" alt="distribution (histogram)">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/bmi_comp_plot.png" width="400px" alt="distribution (histogram)">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/charges_comp_plot.png" width="400px" alt="distribution (histogram)">
 
 estimated distribution based on chi-squared test data :
 
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/age_dist_score.png" width="400px" alt="estimated distribution (kde)">
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/age_estimate_dist.png" width="400px" alt="estimated distribution (kde)">
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/bmi_dist_score.png" width="400px" alt="estimated distribution (kde)">
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/bmi_estimate_dist.png" width="400px" alt="estimated distribution (kde)">
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/charges_dist_score.png" width="400px" alt="estimated distribution (kde)">
-<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/charges_estimate_dist.png" width="400px" alt="estimated distribution (kde)">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/age_dist_score.png" width="400px" alt="estimated distribution (kde)">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/age_estimate_dist.png" width="400px" alt="estimated distribution (kde)">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/bmi_dist_score.png" width="400px" alt="estimated distribution (kde)">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/bmi_estimate_dist.png" width="400px" alt="estimated distribution (kde)">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/charges_dist_score.png" width="400px" alt="estimated distribution (kde)">
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/charges_estimate_dist.png" width="400px" alt="estimated distribution (kde)">
 
 ## Dataset
 
