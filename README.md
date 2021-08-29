@@ -168,6 +168,52 @@ three types of testing methods used to test normalirity of distribution. qq-plot
     </tbody>
 </table>
 
+<table>
+    <tbody>
+        <tr>
+            <td style="background-color: darkgray; text-align: center;" colspan="4">
+                <h4>wilk Shapiro test results</h4>
+            </td>
+        </tr>
+        <tr>
+            <td><h4>feature</h4></td>
+            <td><h4>statics</h4></td>
+            <td><h4>p value</h4></td>
+            <td><h4>null hypothesis</h4></td>
+        </tr>
+        <tr>
+            <td>age</td>
+            <td>0.9446</td>
+            <td>5.6874e-22</td>
+            <td>reject</td>
+        </tr>
+        <tr>
+            <td>bmi</td>
+            <td>0.9938</td>
+            <td>2.6098e-05</td>
+            <td>reject</td>
+        </tr>
+        <tr>
+            <td>children</td>
+            <td>0.8231</td>
+            <td>5.0663e-36</td>
+            <td>reject</td>
+        </tr>
+        <tr>
+            <td>charges</td>
+            <td>0.8146</td>
+            <td>1.1504e-36</td>
+            <td>reject</td>
+        </tr>
+    </tbody>
+</table>
+
+***outliers***
+
+box plots used to identify outliers in the data.
+
+<img src="https://github.com/ashen007/Medical_Cost_prediction/blob/doc/demo/EDA/boxplot.png" alt="outliers">
+
 ## Dataset
 
 dataset use in here is medical cost prediction dataset from **kaggle**. you can find it
