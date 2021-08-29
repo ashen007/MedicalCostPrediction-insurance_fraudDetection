@@ -1,27 +1,40 @@
 # medical cost predictions
 
-In this notebook try to build a better predicting model to estimate medical cost
-of person. in here use linear regression models using ordinary least square, gradient
-decent, ridge regularization (L2), lasso regularization (L1), and polynomial methods.
+optimal way to predict medical cost of patients based on their historical data such as age,gender children, smoking
+habits and their region of live. of course this is regression problem so linear, non-linear and ensemble methods are
+used to choose best model to make prediction with less variance and with higher accuracy possible.
 
-# Dataset
-dataset use in here is medical cost prediction dataset from **kaggle**. you can find it from <a href="https://www.kaggle.com/mirichoi0218/insurance">here</a>.
+## Data quality
 
+before apply any modeling algorithm or before do any changes to data examine basic assumption with 4-plots, which are:
 
-# models
+- **Fixed Location:**
+  If the fixed location assumption holds, then the run sequence plot will be flat and non-drifting.
 
-# models performance when normal distribution
-1. ***OLS*** - r2_score: 80.939860035233 MSE: 462.49007439686613
-2. ***Gradient Descent*** - r2_score: 80.83391330922103 MSE: 465.06084823619557
-3. ***Ridge Regression with gradient decent*** - r2_score: 80.9393006522291 MSE: 462.5036477015515
-4. ***Lasso Regression with gradient decent*** - r2_score: 80.93931120043436 MSE: 462.50339175168745
+- **Fixed Variation:**
+  If the fixed variation assumption holds, then the vertical spread in the run sequence plot will be approximately the same over the entire horizontal axis.
 
+- **Randomness:**
+  If the randomness assumption holds, then the lag plot will be structureless and random.
 
+- **Fixed Distribution:**
+  If the fixed distribution assumption holds, in particular if the fixed normal distribution holds, then the histogram
+  will be bell-shaped, and the normal probability plot will be linear.
 
-# models performance when polynomial distribution
-1. ***OLS*** - r2_score: 86.6583090316484
-2. ***Gradient Descent*** - r2_score: 80.33592701210077
-3. ***Ridge Regression with gradient decent*** - r2_score: 81.28809640222535
-4. ***Lasso Regression with gradient decent*** - r2_score: 81.28792707426157
+![4-plot example](demo/EDA/charges_4plot.png)
 
+after prove data fulfill underlying assumption then exploratory data analysis can be begun. first summery about
+location statistics and variability of data then distribution and correlation statistics are calculated. four estimators
+used to estimate mean(not robust), trimmed mean, winzorized mean and median. winsorized mean has the lowest 
+standard error among three mean estimators. median is lower than mean in every feature that is a hint on right skewed
+distribution.
 
+![central tendency estimators](demo/EDA/central tendancy.jpg)
+![standard error of estimator](demo/EDA/std error of central tendancy.jpg)
+
+## Dataset
+
+dataset use in here is medical cost prediction dataset from **kaggle**. you can find it
+from <a href="https://www.kaggle.com/mirichoi0218/insurance">here</a>.
+
+## models
