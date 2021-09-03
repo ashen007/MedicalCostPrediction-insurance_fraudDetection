@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/data/feature engineered" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/data/cleaned" />
+      <excludeFolder url="file://$MODULE_DIR$/data/temp" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
