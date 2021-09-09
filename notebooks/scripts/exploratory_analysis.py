@@ -26,8 +26,7 @@ class Factory:
         :return:
         """
         if not subplots:
-            fig = plt.Figure(figsize=size, dpi=dpi)
-            return fig
+            plt.Figure(figsize=size, dpi=dpi)
         else:
             fig, axes = plt.subplots(nrows=sub_count[0],
                                      ncols=sub_count[1],
@@ -851,7 +850,8 @@ class FourPlots:
         :param format:
         :return:
         """
-        self._factory.render(size=fig_size, dpi=dpi)
+        # self._factory.render(size=fig_size, dpi=dpi)
+        plt.figure(figsize=fig_size, dpi=dpi)
         sns.lineplot(x=np.array(range(0, self.data[feature].shape[0], 1)),
                      y=np.sin(self.data[feature]),
                      color=color, palette=palette)
@@ -909,10 +909,13 @@ class FourPlots:
 
         plt.show()
 
-    def hist_plot(self, feature, fig_size=(12, 6), dpi=300, color=None, palette=None,
+    def hist_plot(self, feature, fig_size, dpi=300, color=None, palette=None,
+                  discrete=False, bins='auto',
                   save=False, path='filename', format='png'):
         """
         create histogram plot to examine fixed distribution of data
+        :param bins:
+        :param discrete:
         :param feature:
         :param fig_size:
         :param dpi:
@@ -923,8 +926,9 @@ class FourPlots:
         :param format:
         :return:
         """
-        self._factory.render(size=fig_size, dpi=dpi)
-        sns.histplot(x=self.data[feature],
+        # self._factory.render(size=fig_size, dpi=dpi)
+        plt.figure(figsize=fig_size, dpi=dpi)
+        sns.histplot(x=self.data[feature], discrete=discrete, bins=bins,
                      color=color, palette=palette)
 
         if save:
