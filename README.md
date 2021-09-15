@@ -1,14 +1,14 @@
 # medical cost predictions & insurance fraud detection
 
-optimal way to predict medical cost of patients based on their historical data such as age,gender children, smoking
-habits and their region of live. of course this is regression problem so linear, non-linear and ensemble methods are
-used to choose best model to make prediction with less variance and with higher accuracy possible. fraud detection devide
-to parts based on ethir patient admit to hospital or OPD. fraud detection is a binary classification task.
+The optimal way to predict the medical cost of patients is based on their historical data such as age, gender children, smoking
+habits and the region they live in. of course, this is a regression problem so linear, non-linear and ensemble methods are
+used to choose the best model to make predictions with less variance and with higher accuracy possible. fraud detection decided
+to parts based on either patient admit to hospital or OPD. fraud detection is a binary classification task.
 
 ## Data quality
 
-before apply any modeling algorithm or before do any changes to data examine basic assumption with 4-plots, which are:
-(almost every feature of fraud detection data are categorical 4-plots are use on numerical data)
+before applying any modelling algorithm or before do any data changes examine basic assumptions with 4-plots, which are:
+(almost every feature of fraud detection data are categorical 4-plots are using on numerical data)
 
 - **Fixed Location:**
   If the fixed location assumption holds, then the run sequence plot will be flat and non-drifting.
@@ -21,23 +21,23 @@ before apply any modeling algorithm or before do any changes to data examine bas
   If the randomness assumption holds, then the lag plot will be structureless and random.
 
 - **Fixed Distribution:**
-  If the fixed distribution assumption holds, in particular if the fixed normal distribution holds, then the histogram
+  If the fixed distribution assumption holds, in particular, if the fixed normal distribution holds, then the histogram
   will be bell-shaped, and the normal probability plot will be linear.
 
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/charges_4plot.png" alt="4-plot example">
 
 ***central tendency***
 
-after prove data fulfill underlying assumption then exploratory data analysis can be begun. first summery about location
-statistics and variability of data then distribution and correlation statistics are calculated. four estimators used to
-estimate mean(not robust), trimmed mean, winzorized mean and median. winsorized mean has the lowest standard error among
-three mean estimators. median is lower than mean in every feature that is a hint on right skewed distribution.
+after proving the data fulfil the underlying assumption then exploratory data analysis can be begun. The first summary is about location
+statistics and variability of data then distribution and correlation statistics are calculated. four estimators were used to
+estimate mean(not robust), trimmed mean, winterized mean and median. winsorized mean has the lowest standard error among
+The three mean estimators. median is lower than mean in every feature that is a hint on right-skewed distribution.
 
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/central tendancy.jpg" alt="central tendency estimators" width="400px"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/std error of central tendancy.jpg" alt="standard error of estimator" width="400px">
 
 ***distribution analysis***
 
-chi-squared goodness of fit test done on every discrete and continuess feature to estimate best distribution to match
+chi-squared goodness of fit test done on every discrete and continuous feature to estimate the best distribution to match
 with data.
 
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/continues_hist.png" alt="distribution (histogram)" width="400px"> <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/master/demo/EDA/kde.png" alt="distribution (histogram)" width="400px">
@@ -55,7 +55,7 @@ estimated distribution based on **_chi-squared_** test data :
 
 ***normality test***
 
-three types of testing methods used to test normalirity of distribution. qq-plots and anderson darling, wilk Shapiro.
+three types of testing methods are used to test the normality of distribution. Q-Q-plots and Anderson darling, wilk Shapiro.
 
 - **H0** = The null hypothesis assumes no difference between the observed and theoretical distribution
 - **Ha** = The alternative hypothesis assumes there is a difference between the observed and theoretical distribution
@@ -212,8 +212,8 @@ three types of testing methods used to test normalirity of distribution. qq-plot
 
 ***outliers***
 
-box plots used to identify outliers in the data. in fraud detection outliers are used to identify unusal behaviors
-so that purpose outliers should kept in dataset.
+box plots used to identify outliers in the data. in fraud, detection outliers are used to identify unusual behaviours
+so that purpose outliers should be kept in the dataset.
 
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/doc/demo/EDA/boxplot.png" alt="outliers">
 
@@ -225,7 +225,7 @@ three methods used to standardized features which are -
 - box-cox transformation
 - yoe-Johnson transformation
 
-scaling done by robust scaling method because there are outliers in data.
+scaling is done by the robust scaling method because there are outliers in data.
 
 ![](demo/Model%20Creation/age_box_cox.png)
 ![](demo/Model%20Creation/bmi_yj_trans.png)
@@ -237,10 +237,10 @@ scaling in fraud detection dataset:
 
 ## diamentional reduction
 
-fraud detection data has two separate data on patient which are medical information and benificiary information about
-certain insurance claim. these two combine using claim id. in that case it has 53 featurs and 40474 records. Random forest
-classifier used with Recursive feature elemination cross validation to identify potimized feature count. k best method use
-for get best k features for models.
+fraud detection data has two separate data on patients which are medical information and beneficiary information about
+A certain insurance claims. these two combine using claim id. in that case it has 53 features and 40474 records. Random forest
+classifier used with Recursive feature elimination cross-validation to identify optimized feature count. k best method use
+to get the best k features for models.
 
 ![](demo/Fraud%20Detection/rfecv_feture_selection.png)
 ![](demo/Fraud%20Detection/kbest_feture_selection.png)
@@ -255,7 +255,7 @@ model.
 
 ![](demo/Model%20Creation/all%20models%20evaluation.png)
 
-- linear models - ordinary least square, lasso (L1), ridge (L2), elastic net, ransac, huber
+- linear models - ordinary least square, lasso (L1), ridge (L2), elastic net, RANSAC, Huber
 
 ![](demo/Model%20Creation/compare%20real_regularization_robust.png)
 
@@ -299,7 +299,7 @@ model.
 </tbody>
 </table>
 
-- non-linear models - polynomial ridge, k nearest neighbors, decision tree
+- non-linear models - polynomial ridge, k nearest neighbours, decision tree
 
 ![](demo/Model%20Creation/the%20best%20tree%20compare%20the%20best%20knn.png)
 ![](demo/Model%20Creation/compare%20degree%20of%20polynomial%20function.png)
@@ -363,11 +363,11 @@ model.
 </tbody>
 </table>
 
-- insurence fraud detection
+- insurance fraud detection
 
-first section of the calssifier pipeline is feature selection using select kbest scoring by `mutual_info_classif`
-to choose 10 out of 48 features. next section is the grid search for tune hyper-parameters of the underling model.
-it can be a linear, tree, polynomial or a ensemable. scoring methods used in grid seach was `precision`, `recall`,
+The first section of the classifier pipeline is feature selection using select best scoring by `mutual_info_classif`
+to choose 10 out of 48 features. The next section is the grid search for tuning hyper-parameters of the underlying model.
+it can be linear, tree, polynomial or ensemble. scoring methods used in grid search was `precision`, `recall`,
 `f1` and `auc`. to re-fit the model `f1` and `auc` used.
 
 #### tested models
