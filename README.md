@@ -1,12 +1,14 @@
-# medical cost predictions
+# medical cost predictions & insurance fraud detection
 
 optimal way to predict medical cost of patients based on their historical data such as age,gender children, smoking
 habits and their region of live. of course this is regression problem so linear, non-linear and ensemble methods are
-used to choose best model to make prediction with less variance and with higher accuracy possible.
+used to choose best model to make prediction with less variance and with higher accuracy possible. fraud detection devide
+to parts based on ethir patient admit to hospital or OPD. fraud detection is a binary classification task.
 
 ## Data quality
 
 before apply any modeling algorithm or before do any changes to data examine basic assumption with 4-plots, which are:
+(almost every feature of fraud detection data are categorical 4-plots are use on numerical data)
 
 - **Fixed Location:**
   If the fixed location assumption holds, then the run sequence plot will be flat and non-drifting.
@@ -210,7 +212,8 @@ three types of testing methods used to test normalirity of distribution. qq-plot
 
 ***outliers***
 
-box plots used to identify outliers in the data.
+box plots used to identify outliers in the data. in fraud detection outliers are used to identify unusal behaviors
+so that purpose outliers should kept in dataset.
 
 <img src="https://github.com/ashen007/Medical_Cost_prediction/blob/doc/demo/EDA/boxplot.png" alt="outliers">
 
@@ -228,7 +231,23 @@ scaling done by robust scaling method because there are outliers in data.
 ![](demo/Model%20Creation/bmi_yj_trans.png)
 ![](demo/Model%20Creation/charges_power_(yj)_trans.png)
 
+scaling in fraud detection dataset:
+
+![](demo/Fraud%20Detection/scaling_methods_comp.png)
+
+## diamentional reduction
+
+fraud detection data has two separate data on patient which are medical information and benificiary information about
+certain insurance claim. these two combine using claim id. in that case it has 53 featurs and 40474 records. Random forest
+classifier used with Recursive feature elemination cross validation to identify potimized feature count. k best method use
+for get best k features for models.
+
+![](demo/Fraud%20Detection/rfecv_feture_selection.png)
+![](demo/Fraud%20Detection/kbest_feture_selection.png)
+
 ## models
+
+- medical cost prediction
 
 coefficient of determination or R2, It measures the amount of variance of the prediction which is explained by the
 dataset. R2 values close to 1 mean an almost-perfect regression, while values close to 0 (or negative) imply a bad
@@ -340,6 +359,124 @@ model.
 <td>stacking</td>
 <td>0.831071</td>
 <td>0.851779</td>
+</tr>
+</tbody>
+</table>
+
+- insurence fraud detection
+
+first section of the calssifier pipeline is feature selection using select kbest scoring by `mutual_info_classif`
+to choose 10 out of 48 features. next section is the grid search for tune hyper-parameters of the underling model.
+it can be a linear, tree, polynomial or a ensemable. scoring methods used in grid seach was `precision`, `recall`,
+`f1` and `auc`. to re-fit the model `f1` and `auc` used.
+
+#### tested models
+
+  - `LogisticRegression`
+
+![](demo/Fraud%20Detection/compare%20splits%20scores.png)
+
+  - `SGDClassifier`
+
+![](demo/Fraud%20Detection/compare%20splits%20scores%20model_2.png)
+
+  - `LogisticRegression` with `Polynomial` function
+
+![](demo/Fraud%20Detection/compare%20splits%20scores%20model_3.png)
+
+  - `SVC`
+
+![](demo/Fraud%20Detection/compare%20splits%20scores%20model_4.png)
+
+  - `KNeighborsClassifier`
+
+![](demo/Fraud%20Detection/compare%20splits%20scores%20model_5.png)
+
+  - `DecisionTreeClassifier`
+
+![](demo/Fraud%20Detection/compare%20splits%20scores%20model_6.png)
+
+  - `ExtraTreeClassifier`
+
+![](demo/Fraud%20Detection/compare%20splits%20scores%20model_7.png)
+
+  - `RandomForestClassifier`
+
+![](demo/Fraud%20Detection/compare%20splits%20scores%20model_8.png)
+
+  - `AdaBoostClassifier`
+
+![](demo/Fraud%20Detection/compare%20splits%20scores%20model_9.png)
+
+  - `BaggingClassifier`
+
+![](demo/Fraud%20Detection/compare%20splits%20scores%20model_10.png)
+
+  - `VotingClassifier`
+
+![](demo/Fraud%20Detection/compare%20splits%20scores%20model_11.png)
+
+<table>
+<tbody>
+<tr style="background-color: darkgray; text-align: center;">
+<td><h4>model</h4></td>
+<td><h4>score in train data</h4></td>
+<td><h4>score in test data</h4></td>
+</tr>
+<tr>
+<td>LogisticRegression</td>
+<td>0.73</td>
+<td>0.73</td>
+</tr>
+<tr>
+<td>SGDClassifier</td>
+<td>0.68</td>
+<td>0.68</td>
+</tr>
+<tr>
+<td>LogisticRegression with Polynomial function</td>
+<td>0.73</td>
+<td>0.73</td>
+</tr>
+<tr>
+<td>SVC</td>
+<td>0.73</td>
+<td>0.73</td>
+</tr>
+<tr>
+<td>KNeighborsClassifier</td>
+<td>0.73</td>
+<td>0.82</td>
+</tr>
+<tr>
+<td>DecisionTreeClassifier</td>
+<td>0.91</td>
+<td>0.92</td>
+</tr>
+<tr>
+<td>ExtraTreeClassifier</td>
+<td>0.73</td>
+<td>0.73</td>
+</tr>
+<tr>
+<td>RandomForestClassifier</td>
+<td>0.87</td>
+<td>0.93</td>
+</tr>
+<tr>
+<td>AdaBoostClassifier</td>
+<td>0.97</td>
+<td>1</td>
+</tr>
+<tr>
+<td>BaggingClassifier</td>
+<td>0.91</td>
+<td>0.92</td>
+</tr>
+<tr>
+<td>VotingClassifier</td>
+<td>0.95</td>
+<td>0.97</td>
 </tr>
 </tbody>
 </table>
