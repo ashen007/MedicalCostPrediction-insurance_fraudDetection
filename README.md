@@ -485,3 +485,8 @@ it can be linear, tree, polynomial or ensemble. scoring methods used in grid sea
 
 dataset use in here is medical cost prediction dataset from **kaggle**. you can find it
 from <a href="https://www.kaggle.com/mirichoi0218/insurance">here</a>.
+
+## how to contribute
+- you can improve models
+- modify readme file to more clear look
+- feature engineer data
